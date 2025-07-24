@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>FoodBooking-weather</title>
+        <link rel="stylesheet" href="css/weather.css">
+        <link rel="shortcut icon" type="image/png" href="https://res.cloudinary.com/dhxabc6as/image/upload/v1750652035/web_logo_o0evny.png"/>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/7edc976cfd.js" crossorigin="anonymous"></script>
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <link rel="stylesheet" href="css/footer.css">
+</head>
+    <body>
+        <!-- task-bar -->
+         <div id="accountPopup" class="popup-account">
+        <div class="popup-content">
+            <span class="close-popup" onclick="closePopup()">&times;</span>
+            <h2>Thông tin tài khoản đang đăng nhập</h2>
+            <p><strong>Tên:</strong> <span id="userName">...</span></p>
+            <p><strong>Email:</strong> <span id="userEmail">...</span></p>
+        </div>
+        </div>
+
+        <a href="/FoodBooking-login/login.html" class="btn-logout"><i class='bx bx-log-out'></i></a>
+        <button onclick="info()" id="account"><i class='bx bx-user-circle' ></i></button>
+        <div class="taskbar">
+            <a href="/FoodBooking-home/FoodBooking.html"><img src="https://res.cloudinary.com/dhxabc6as/image/upload/v1750578758/BetterImage_1750578615095_hpjyos.jpg" alt="logo" class="logo"></a>
+            <a href="/FoodBooking-search/product-search.html">
+            <div class="search-container">
+            <input class="find" type="text" placeholder="Find some food here!">
+            <i class="fas fa-search search-icon"></i>
+        </div>
+        </a>
+            <ul class="btn">
+                <li><a href="/FoodBooking-about/about.html">Thông tin</a></li>
+                <li><a href="/FoodBooking-product/product.html" class="Food">Sản phẩm</a></li>
+                <li><a href="/FoodBooking-feedback/feedback.html">Liên hệ</a></li>
+                <li><a href="/FoodBooking-basket/basket.html">Giỏ hàng</a></li>
+            </ul>
+        </div>
+        <!-- weather -->
+        <h1>Weather</h1>
+        <div class="info">
+            <input type="text" id="city" placeholder="Enter city name">
+            <button onclick="getWeather()">See weather</button>
+        </div>
+        <div id="current-weather" class="section">
+            <h2>Current Weather <i class="fa-solid fa-cloud-sun"></i></h2>
+            <p id="city-name">Location:---------------</p>
+            <p id="weather-desc">Temperature:---------------</p>
+            <p id="temp">Feels Like:---------------</p>
+            <p id="condition">Condition:---------------</p>
+            <p id="humidity">Humidity:---------------</p>
+            <p id="wind-speed">Wind Speed:---------------</p>
+            <p id="visibility">Visibility:---------------</p>
+        </div>
+        <div id="hourly-forecast" class="section">
+            <h2>Hourly Forecast <i class="fa-solid fa-temperature-half"></i></h2>
+            <canvas id="hourlyChart"></canvas>
+        </div>
+        <div id="rain-forecast" class="section">
+            <h2>Rain Probability <i class="fa-solid fa-cloud-showers-heavy"></i></h2>
+            <canvas id="rainChart"></canvas>
+        </div>
+        <div class="daily-container">
+            <h2 class="daily-text">10-Day Forecast <i class="fa-solid fa-calendar-days"></i></h2>
+            <div id="daily-forecast" class="section"></div>
+        </div>
+        <div id="weather-map" class="section">
+            <h2>Weather Map <i class="fa-solid fa-map"></i></h2>
+            <div style="margin-bottom: 10px;">
+                <button onclick="toggleLayer('temp')">Show Temperature Map</button>
+                <button onclick="toggleLayer('rain')">Show Rain Map</button>
+            </div>
+            <div id="map" style="height: 500px; width: 100%;"></div>
+        </div>        
+        <!-- footer -->
+        
+    <!-- Thay thế footer cũ bằng include footer mới -->
+    <div id="footer-placeholder"></div>
+    <script>
+        fetch('components/footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+            });
+    </script>
+    </body>
+    <script src="js/weather.js"></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+</html>

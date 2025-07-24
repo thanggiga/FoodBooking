@@ -1,0 +1,212 @@
+/* start */
+html {
+    font-family: nunito;
+    font-size: 20px;
+    background-color: #FAF7F0;
+}
+
+/* btn */
+.btn-logout {
+    top: 12px;
+    right: 80px;
+    background: none;
+    border: none;
+    font-size: 40px;
+    color: black;
+    transition: 150ms;
+    position: fixed;
+    z-index: 11;
+}
+
+.btn-acc {
+    background: none;
+    border: none;
+    font-size: 40px;
+    color: black;
+    transition: 150ms;
+    position: fixed;
+    right: 2px;
+    top: 14px;
+    z-index: 11;
+}
+
+.btn-acc:hover,
+.btn-logout:hover {
+    transform: scale(1.05);
+    transition: 150ms;
+}
+
+.btn-acc:active,
+.btn-logout:active {
+    transform: scale(1.1);
+    transition: 50ms;
+}
+/* taskbar */
+.taskbar { 
+    background-color: #D8D2C2; 
+    width: 100%; 
+    margin: 0; 
+    padding: 2px 50px 2px 0px; 
+    height: 65px; 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between; 
+    z-index: 10; 
+    box-shadow: 0 4px 5px -3px rgb(80, 80, 80); 
+} 
+
+.logo { 
+    margin: 6px auto auto 20px;
+    width: 220px;
+    transition: 150ms; 
+    border-radius: 10px;
+} 
+
+.search-container { 
+    position: relative; 
+    width: 750px; 
+    margin-left: 100px;
+} 
+
+.find { 
+    padding: 10px 20px; 
+    font-size: 20px; 
+    border-radius: 12px; 
+    border: none; 
+    width: 100%; 
+    padding-right: 60px; 
+    box-sizing: border-box; 
+    outline: none; 
+} 
+
+.search-icon { 
+    position: absolute; 
+    right: 25px; 
+    top: 50%; 
+    color: black; 
+    transform: translateY(-50%); 
+    pointer-events: none; 
+    font-size: 20px; 
+} 
+
+.btn { 
+    list-style: none; 
+    display: flex; 
+    margin-right: 50px; 
+    padding-right: 75px; 
+    font-size: 22px; 
+} 
+
+.btn li { 
+    margin-right: 22px; 
+    transition: 150ms;
+} 
+
+.btn li a { 
+    text-decoration: none; 
+    color: black; 
+    transition: 1s; 
+    border-radius: 10px; 
+    padding: 10px 15px; 
+    margin-left: 15px;
+} 
+
+.btn li a:hover { 
+    transition: 1s; 
+    border-radius: 10px; 
+} 
+
+.btn li:hover { 
+    transform: scale(1.1); 
+    transition: 150ms; 
+} 
+
+.btn li:active { 
+    transform: scale(1.25); 
+    transition: 50ms; 
+}
+/* product */
+.products {
+    margin: 100px 100px 0px 100px;
+}
+
+.purchased{
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* 5 sản phẩm trên 1 hàng */
+    justify-items: center;
+    margin-top: -50px;
+    align-items: center;
+}
+
+.purchased-item {
+    text-align: center;
+    justify-content: center;
+    border-radius: 20px;
+    width: 300px;
+    height: auto;
+    background-color: #e2dfcf;
+    padding: 20px;
+    scale: 0.8;
+    z-index: 0;
+}
+
+.purchased-item img {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.product {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    padding-top: 200px;
+}
+
+.product-demo.visible {
+    display: block;
+}
+
+.product-img {
+    border-radius: 11px;
+}
+
+.price {
+    font-weight: bolder;
+}
+
+.popup-account {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.6);
+  }
+  
+  .popup-content {
+    background-color: white;
+    margin: 15% auto;
+    padding: 20px;
+    width: 600px;
+    border-radius: 8px;
+    text-align: left;
+    position: relative;
+  }
+  
+  .close-popup {
+    position: absolute;
+    right: 15px;
+    top: 5px;
+    font-size: 20px;
+    cursor: pointer;
+  }
+
+  footer {
+    position: relative;
+    bottom: -366px;
+}

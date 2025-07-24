@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>FoodBooking - Đăng nhập</title>
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="shortcut icon" type="image/png" href="https://res.cloudinary.com/dhxabc6as/image/upload/v1750652035/web_logo_o0evny.png" />
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://kit.fontawesome.com/7edc976cfd.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="css/footer.css">
+</head>
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+    import {
+        getAuth,
+        signInWithEmailAndPassword,
+        GoogleAuthProvider,
+        signInWithPopup,
+        sendPasswordResetEmail
+    } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyCisUCcjEU0DVZs0xkRVjBqgFykm0Ayl1M",
+        authDomain: "foodbooking-dt2025.firebaseapp.com",
+        databaseURL: "https://foodbooking-dt2025-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "foodbooking-dt2025",
+        storageBucket: "foodbooking-dt2025.firebasestorage.app",
+        messagingSenderId: "829019412638",
+        appId: "1:829019412638:web:7ec978e55f9d769d3bc38f",
+        measurementId: "G-P4MQBH2M1J"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
+
+    function loginWithEmail(event) {
+        event.preventDefault();
+
+        const email = document.querySelector('.email').value.trim();
+        const password = document.querySelector('.password').value.trim();
+
+        if (!email || !password) {
+            alert("Vui lòng nhập email và mật khẩu.");
+            return;
+        }
+
+        signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                const user = userCredential.user;
+                alert("Đăng nhập thành công!");
+                localStorage.setItem("currentUser", JSON.stringify({
+                    uid: user.uid,
+                    email: user.email,
+                    displayName: user.displayName
+                }));
+
+                window.location.href = "/FoodBooking-home/FoodBooking.html";
+            })
+            .catch((error) => {
+                if (error.code === "auth/user-not-found" || error.code === "auth/wrong-password") {
+                    alert("Email hoặc mật khẩu không đúng.");
+                } else {
+                    alert("Email hoặc mật khẩu không đúng.");
+                }
+            });
+    }
+
+    function loginWithGoogle(event) {
+        event.preventDefault();
+
+        signInWithPopup(auth, provider)
+            .then((result) => {
+                const user = result.user;
+                alert("Đăng nhập Google thành công: " + user.displayName);
+                localStorage.setItem("currentUser", JSON.stringify({
+                    uid: user.uid,
+                    email: user.email,
+                    displayName: user.displayName
+                }));
+
+                window.location.href = "/FoodBooking-home/FoodBooking.html";
+            })
+            .catch((error) => {
+                alert("Lỗi đăng nhập Google");
+            });
+    }
+
+    function resetPassword(event) {
+        event.preventDefault();
+        const email = document.querySelector('.email').value.trim();
+
+        if (!email) {
+            alert("Vui lòng nhập email để đặt lại mật khẩu.");
+            return;
+        }
+
+        sendPasswordResetEmail(auth, email)
+            .then(() => {
+                alert("Chúng tôi đã gửi email đặt lại mật khẩu. Vui lòng kiểm tra hộp thư!");
+            })
+            .catch((error) => {
+                if (error.code === "auth/user-not-found") {
+                    alert("Không tìm thấy tài khoản với email này.");
+                } else if (error.code === "auth/invalid-email") {
+                    alert("Email không hợp lệ.");
+                } else {
+                    alert("Email không hợp lệ");
+                }
+            });
+    }
+
+    document.querySelector(".btn-login").addEventListener("click", loginWithEmail);
+    document.querySelector(".btn-google").addEventListener("click", loginWithGoogle);
+    document.querySelector(".forgot-password-link").addEventListener("click", resetPassword);
+</script>
+
+<body>
+    <button class="btn-info" onclick="showFooter()"><i class='bx bx-info-circle'></i></button>
+    <form class="signIn">
+        <img class="logo_form" src="https://res.cloudinary.com/dhxabc6as/image/upload/v1750578758/BetterImage_1750578615095_hpjyos.jpg" alt="logo">
+        <div class="input-box">
+            <input type="email" class="email" placeholder="Email" required>
+            <i class="fa-solid fa-envelope"></i>
+        </div>
+        <div class="input-box">
+            <input type="password" class="password" placeholder="Mật khẩu" required>
+            <i class="fa-solid fa-lock"></i>
+        </div>
+        <div class="remember-forgot">
+            <div class="forgot">
+                <a href="#" class="forgot-password-link">Quên mật khẩu?</a>
+            </div>
+        </div>
+        <a href="#" class="btn-login">Đăng nhập</a>
+        <a href="#" class="btn-google"><i class="fa-brands fa-google"></i> Đăng nhập với Google</a>
+        <p class="acc">Chưa có tài khoản? <a href="/FoodBooking-register/register.html"
+                class="btn-register">Đăng ký</a></p>
+    </form>
+
+    <!-- footer -->
+    
+    <!-- Thay thế footer cũ bằng include footer mới -->
+    <div id="footer-placeholder"></div>
+    <script>
+        fetch('components/footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+            });
+    </script>
+</body>
+<script src="js/login.js"></script>
+
+</html>

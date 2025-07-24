@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>FoodBooking-about</title>
+    <link rel="stylesheet" href="css/about.css">
+    <link rel="shortcut icon" type="image/png" href="https://res.cloudinary.com/dhxabc6as/image/upload/v1750652035/web_logo_o0evny.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
+        rel="stylesheet">
+    <script src="https://kit.fontawesome.com/7edc976cfd.js" crossorigin="anonymous"></script>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="css/footer.css">
+</head>
+
+<body>
+    <!-- taskbar -->
+     <div id="accountPopup" class="popup-account">
+        <div class="popup-content">
+            <span class="close-popup" onclick="closePopup()">&times;</span>
+            <h2>Thông tin tài khoản đang đăng nhập</h2>
+            <p><strong>Tên:</strong> <span id="userName">...</span></p>
+            <p><strong>Email:</strong> <span id="userEmail">...</span></p>
+        </div>
+        </div>
+
+    <div class="taskbar">
+        <a href="/FoodBooking-home/FoodBooking.html"><img src="https://res.cloudinary.com/dhxabc6as/image/upload/v1750578758/BetterImage_1750578615095_hpjyos.jpg" alt="logo" class="logo"></a>
+        <a href="/FoodBooking-search/product-search.html">
+            <div class="search-container">
+            <input class="find" type="text" placeholder="Tìm món ăn ở đây!">
+            <i class="fas fa-search search-icon"></i>
+        </div>
+        </a>
+        <ul class="btn">
+            <li><a href="/FoodBooking-home/FoodBooking.html">Trang chủ</a></li>
+            <li><a href="/FoodBooking-product/product.html" class="Food">Sản phẩm</a></li>
+            <li><a href="/FoodBooking-feedback/feedback.html">Liên hệ</a></li>
+            <li><a href="/FoodBooking-basket/basket.html">Giỏ hàng</a></li>
+        </ul>
+    </div>
+    <a href="/FoodBooking-login/login.html" class="btn-logout"><i class='bx bx-log-out'></i></a>
+    <button onclick="info()" class="btn-acc"><i class='bx bx-user-circle'></i></button>
+    <!-- about-section -->
+    <section class="about">
+        <h2 class="tag-about">Về Chúng Tôi</h2>
+        <div class="text-about">
+            <p class="text">
+                FoodBooking là một dịch vụ đặt món ăn uống giao tận nhà hoặc đặt bàn trước tại các quán nhà hàng nổi
+                tiếng trên toàn quốc. <br>
+                Cung cấp các mẫu website, giao diện website nhà hàng, quản lý doanh thu, tin tức và sự kiện đẳng cấp.
+                <br>
+                Chúng tôi luôn cập nhật và phát triển dịch vụ theo thị trường mới nhất.
+            </p>
+            <p class="slogan">
+                Chúng tôi đã có 15 năm kinh nghiệm trong các lĩnh vực kể trên với vô vàn đánh giá rất tốt đến từ khách
+                hàng! <br>
+                Chúng tôi luôn đem đến cho khách hàng sự thoả mãn và tận hưởng các món ăn đồ uống tốt nhất toàn quốc.
+            </p>
+            <p class="more">
+                Xem thêm một vài thông tin về FoodBooking tại <button class="btn-back">
+                    <a href="/FoodBooking-home/FoodBooking.html">
+                        <img src="https://res.cloudinary.com/dhxabc6as/image/upload/v1750578758/BetterImage_1750578615095_hpjyos.jpg" alt="logo" class="logo-back">
+                    </a>
+                </button>!
+            </p>
+            <p class="more2">
+                Hoặc xem thêm thông tin chi tiết về chúng tôi ở dưới !
+            </p>
+    </section>
+    <!-- footer -->
+    
+    <!-- Thay thế footer cũ bằng include footer mới -->
+    <div id="footer-placeholder"></div>
+    <script>
+        fetch('components/footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+            });
+    </script>
+    <script type="module" src="js/about.js"></script>
+</body>
+
+</html>

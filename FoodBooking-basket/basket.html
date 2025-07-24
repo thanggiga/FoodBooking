@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>FoodBooking-basket</title>
+        <link rel="stylesheet" href="css/basket.css">
+        <link rel="shortcut icon" type="image/png" href="https://res.cloudinary.com/dhxabc6as/image/upload/v1750652035/web_logo_o0evny.png"/>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/7edc976cfd.js" crossorigin="anonymous"></script>
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+        <link rel="stylesheet" href="css/footer.css">
+    </head>
+    <body>
+        <!-- task-bar -->
+        <div id="accountPopup" class="popup-account">
+        <div class="popup-content">
+            <span class="close-popup" onclick="closePopup()">&times;</span>
+            <h2>Thông tin tài khoản đang đăng nhập</h2>
+            <p><strong>Tên:</strong> <span id="userName">...</span></p>
+            <p><strong>Email:</strong> <span id="userEmail">...</span></p>
+        </div>
+        </div>
+
+        <a href="/FoodBooking-login/login.html" class="btn-logout"><i class='bx bx-log-out'></i></a>
+        <button onclick="info()" class="btn-acc"><i class='bx bx-user-circle' ></i></button>
+        <div class="taskbar">
+            <a href="/FoodBooking-home/FoodBooking.html"><img src="https://res.cloudinary.com/dhxabc6as/image/upload/v1750578758/BetterImage_1750578615095_hpjyos.jpg" alt="logo" class="logo"></a>
+            <a href="/FoodBooking-search/product-search.html">
+            <div class="search-container">
+            <input class="find" type="text" placeholder="Tìm món ăn ở đây!">
+            <i class="fas fa-search search-icon"></i>
+        </div>
+        </a>
+            <ul class="btn">
+                <li><a href="/FoodBooking-about/about.html">Thông tin</a></li>
+                <li><a href="/FoodBooking-product/product.html" class="Food">Sản phẩm</a></li>
+                <li><a href="/FoodBooking-feedback/feedback.html">Liên hệ</a></li>
+                <li><a href="/FoodBooking-bought/bought.html">Đã mua</a></li>
+            </ul>
+        </div>
+        <!-- block of product -->
+        <div class="block">
+            <p class="product">You have not added any food to your basket yet!</p>
+        </div>
+        <!-- footer -->
+        
+    <!-- Thay thế footer cũ bằng include footer mới -->
+    <div id="footer-placeholder"></div>
+    <script>
+        fetch('components/footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+            });
+    </script>
+    <script type="module" src="js/firebase.js"></script>
+    <script type="module" src="js/basket.js"></script>
+</body>
+</html>

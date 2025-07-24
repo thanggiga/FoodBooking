@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <title>FoodBooking-product</title>
+  <link rel="stylesheet" href="css/product.css" />
+  <link rel="shortcut icon" type="image/png" href="https://res.cloudinary.com/dhxabc6as/image/upload/v1750652035/web_logo_o0evny.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet" />
+  <script src="https://kit.fontawesome.com/7edc976cfd.js" crossorigin="anonymous"></script>
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/footer.css">
+</head>
+
+<body>
+  <div id="accountPopup" class="popup-account">
+    <div class="popup-content">
+      <span class="close-popup" onclick="closePopup()">&times;</span>
+      <h2>Thông tin tài khoản đang đăng nhập</h2>
+      <p><strong>Tên:</strong> <span id="userName">...</span></p>
+      <p><strong>Email:</strong> <span id="userEmail">...</span></p>
+    </div>
+  </div>
+
+  <a href="/FoodBooking-login/login.html" class="btn-logout"><i class='bx bx-log-out'></i></a>
+  <button onclick="info()" class="btn-acc"><i class='bx bx-user-circle'></i></button>
+
+  <div class="taskbar">
+    <a href="/FoodBooking-home/FoodBooking.html"><img src="https://res.cloudinary.com/dhxabc6as/image/upload/v1750578758/BetterImage_1750578615095_hpjyos.jpg" alt="logo" class="logo" /></a>
+    <a href="/FoodBooking-search/product-search.html">
+      <div class="search-container">
+        <input class="find" type="text" placeholder="Tìm món ăn ở đây!" />
+        <i class="fas fa-search search-icon"></i>
+      </div>
+    </a>
+    <ul class="btn">
+      <li><a href="/FoodBooking-about/about.html">Thông tin</a></li>
+      <li><a href="/FoodBooking-product/product.html" class="Food">Sản phẩm</a></li>
+      <li><a href="/FoodBooking-feedback/feedback.html">Liên hệ</a></li>
+      <li><a href="/FoodBooking-basket/basket.html">Giỏ hàng</a></li>
+    </ul>
+  </div>
+
+  <div class="filter-section">
+    <h2 class="section-title">Danh mục sản phẩm</h2>
+    <div class="filter-tabs">
+      <button class="filter-tab active" onclick="filterProducts('all')">
+        <i class='bx bx-grid-alt'></i> Tất cả
+      </button>
+      <button class="filter-tab" onclick="filterProducts('food')">
+        <i class='bx bx-bowl-hot'></i> Đồ ăn
+      </button>
+      <button class="filter-tab" onclick="filterProducts('drink')">
+        <i class='bx bx-drink'></i> Đồ uống
+      </button>
+      <button class="filter-tab" onclick="filterProducts('dessert')">
+        <i class='bx bx-cake'></i> Tráng miệng
+      </button>
+    </div>
+  </div>
+
+  <div class="product" id="productContainer"></div>
+
+<div id="productPopup" class="popup-container" style="display: none;">
+  <div class="popup-box">
+    <span class="popup-close" onclick="closeProductPopup()">×</span>
+
+    <div class="popup-content-wrapper">
+      <div class="popup-left">
+        <img id="popupImage" src="" alt="product image" />
+      </div>
+      <div class="popup-right">
+        <h2 id="popupName"></h2>
+        <p id="popupPrice" class="popup-price"></p>
+        <p><strong>Tên shop:</strong> cửa hàng bánh mì Hà Nội</p>
+        <p><strong>Địa chỉ:</strong> Nam Từ Liêm - Hà Nội</p>
+        <p><strong>Thời gian giao hàng dự kiến:</strong> 10 - 20 phút</p>
+        <button onclick="addToBasket()" class="add-to-basket-btn">Thêm vào giỏ hàng</button>
+        <button onclick="chatWithSeller()" class="chat-seller-btn"><i class='bx bx-chat'></i> Chat với người bán</button>
+      </div>
+    </div>
+
+    <section id="comment-section">
+      <h2>Bình luận sản phẩm</h2>
+      <textarea id="comment-input" placeholder="Viết bình luận..."></textarea><br>
+      <button id="submit-comment">Gửi bình luận</button>
+      <div id="comments-container"></div>
+    </section>
+  </div>
+</div>
+<div class="sell-admin-container">
+    <p class="sell">Bạn muốn đăng bán sản phẩm của chính mình?</p>
+    <a href="/FoodBooking-sell/sell.html" class="btn-sell">Đăng bán sản phẩm</a> 
+    <p class="admin">Xin chào admin! Vào quản lí sản phẩm nào</p>
+    <a href="/FoodBooking-admin/admin.html" class="btn-admin">Quản lý sản phẩm</a>
+    <p class="my-products">Quản lý sản phẩm của bạn?</p>
+    <a href="/FoodBooking-myproducts/myproducts.html" class="btn-myproducts">Sản phẩm của tôi</a>
+</div>
+</div>
+
+  <a href="/FoodBooking-chat/chat.html" class="floating-chat-btn" title="Mở danh sách chat">
+      <i class='bx bxs-chat'></i>
+  </a>
+  
+    <!-- Thay thế footer cũ bằng include footer mới -->
+    <div id="footer-placeholder"></div>
+    <script>
+        fetch('components/footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+            });
+    </script>
+
+  <script type="module" src="js/firebase.js"></script>
+  <script type="module" src="js/product.js"></script>
+  <script>
+    async function checkAdmin() {
+        const isAdmin = await checkAdminStatus();
+        if (!isAdmin) {
+            alert("Bạn không có quyền truy cập trang này!");
+            window.location.href = "/FoodBooking-login/login.html";
+        }
+    }
+  </script>
+</body>
+</html>

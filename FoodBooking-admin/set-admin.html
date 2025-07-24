@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>FoodBooking - Set Admin</title>
+        <link rel="stylesheet" href="admin.css">
+        <link rel="shortcut icon" type="image/png" href="pic/web_logo.png"/>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="css/footer.css">
+    </head>
+    <body>
+        <div class="admin-container">
+            <h1>Cấp quyền Admin</h1>
+            <div class="set-admin-form">
+                <input type="email" id="adminEmail" placeholder="Email của tài khoản cần cấp quyền">
+                <button onclick="setAdmin()">Cấp quyền Admin</button>
+            </div>
+        </div>
+
+        <script type="module">
+            import { setAdminRole, checkAdminStatus } from "../FoodBooking-login/js/firebase.js";
+
+            // Kiểm tra quyền admin khi vào trang
+            async function checkAdmin() {
+                const isAdmin = await checkAdminStatus();
+                if (!isAdmin) {
+                    alert("Bạn không có quyền truy cập trang này!");
+                    window.location.href = "/FoodBooking-login/login.html";
+                }
+            }
+
+            // Hàm set admin
+            window.setAdmin = async function() {
+                const email = document.getElementById("adminEmail").value;
+                if (!email) {
+                    alert("Vui lòng nhập email!");
+                    return;
+                }
+
+                try {
+                    const result = await setAdminRole(email);
+                    alert(result.message);
+                } catch (error) {
+                    console.error("Lỗi:", error);
+                    alert("Có lỗi xảy ra: " + error.message);
+                }
+            };
+
+            // Kiểm tra quyền admin khi load trang
+            checkAdmin();
+        </script>
+    </body>
+</html> 

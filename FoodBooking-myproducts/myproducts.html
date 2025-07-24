@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>FoodBooking - Sản phẩm của tôi</title>
+    <link rel="stylesheet" href="css/myproducts.css">
+    <link rel="shortcut icon" type="image/png" href="https://res.cloudinary.com/dhxabc6as/image/upload/v1750652035/web_logo_o0evny.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/7edc976cfd.js" crossorigin="anonymous"></script>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="css/footer.css">
+</head>
+<body>
+    <!-- Popup thông tin tài khoản -->
+    <div id="accountPopup" class="popup-account">
+        <div class="popup-content">
+            <span class="close-popup" onclick="closePopup()">&times;</span>
+            <h2>Thông tin tài khoản đang đăng nhập</h2>
+            <p><strong>Tên:</strong> <span id="userName">...</span></p>
+            <p><strong>Email:</strong> <span id="userEmail">...</span></p>
+        </div>
+    </div>
+
+    <!-- Popup chỉnh sửa sản phẩm -->
+    <div id="editProductPopup" class="popup-edit">
+        <div class="popup-edit-content">
+            <span class="close-popup" onclick="closeEditPopup()">&times;</span>
+            <h2>Chỉnh sửa sản phẩm</h2>
+            <form id="editProductForm">
+                <input type="hidden" id="editProductId">
+                <label for="editName">Tên sản phẩm</label>
+                <input type="text" id="editName" required>
+                
+                <label for="editImageUrl">Hình ảnh (URL)</label>
+                <input type="url" id="editImageUrl" required>
+                
+                <label for="editPrice">Giá (VNĐ)</label>
+                <input type="number" id="editPrice" required>
+                
+                <label for="editCategory">Danh mục</label>
+                <select id="editCategory" required>
+                    <option value="food">Đồ ăn</option>
+                    <option value="drink">Đồ uống</option>
+                    <option value="dessert">Tráng miệng</option>
+                </select>
+                
+                <label for="editDescription">Mô tả</label>
+                <textarea id="editDescription" rows="4" required></textarea>
+                
+                <div class="edit-buttons">
+                    <button type="submit" class="save-btn">Lưu thay đổi</button>
+                    <button type="button" class="cancel-btn" onclick="closeEditPopup()">Hủy</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Nút đăng xuất và thông tin tài khoản -->
+    <a href="/FoodBooking-login/login.html" class="btn-logout"><i class='bx bx-log-out'></i></a>
+    <button onclick="info()" class="btn-acc"><i class='bx bx-user-circle'></i></button>
+
+    <!-- Taskbar -->
+    <div class="taskbar">
+        <a href="/FoodBooking-home/FoodBooking.html"><img src="https://res.cloudinary.com/dhxabc6as/image/upload/v1750578758/BetterImage_1750578615095_hpjyos.jpg" alt="logo" class="logo"></a>
+        <a href="/FoodBooking-search/product-search.html">
+            <div class="search-container">
+                <input class="find" type="text" placeholder="Tìm món ăn ở đây!">
+                <i class="fas fa-search search-icon"></i>
+            </div>
+        </a>
+        <ul class="btn">
+            <li><a href="/FoodBooking-about/about.html">Thông tin</a></li>
+            <li><a href="/FoodBooking-product/product.html" class="Food">Sản phẩm</a></li>
+            <li><a href="/FoodBooking-feedback/feedback.html">Liên hệ</a></li>
+            <li><a href="/FoodBooking-basket/basket.html">Giỏ hàng</a></li>
+        </ul>
+    </div>
+
+    <!-- Container chính -->
+    <div class="my-products-container">
+        <h1>Sản phẩm của tôi</h1>
+        <div class="stats">
+            <div class="stat-item">
+                <span class="stat-number" id="totalProducts">0</span>
+                <span class="stat-label">Tổng sản phẩm</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" id="approvedProducts">0</span>
+                <span class="stat-label">Đã duyệt</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" id="pendingProducts">0</span>
+                <span class="stat-label">Chờ duyệt</span>
+            </div>
+        </div>
+        
+        <div class="filter-tabs">
+            <button class="filter-tab active" onclick="filterProducts('all')">Tất cả</button>
+            <button class="filter-tab" onclick="filterProducts('approved')">Đã duyệt</button>
+            <button class="filter-tab" onclick="filterProducts('pending')">Chờ duyệt</button>
+        </div>
+
+        <div class="products-grid" id="myProductsGrid">
+            <!-- Sản phẩm sẽ được load ở đây -->
+        </div>
+
+        <div class="no-products" id="noProducts" style="display: none;">
+            <i class='bx bx-package'></i>
+            <h3>Bạn chưa có sản phẩm nào</h3>
+            <p>Hãy bắt đầu đăng bán sản phẩm đầu tiên của bạn!</p>
+            <a href="/FoodBooking-sell/sell.html" class="btn-add-product">Đăng bán sản phẩm</a>
+        </div>
+
+        <div class="no-products" id="noProducts" style="display: none;">
+            <i class='bx bx-package'></i>
+            <h3>Bạn chưa đăng bán sản phẩm nào</h3>
+            <p>Hãy bắt đầu đăng bán sản phẩm đầu tiên của bạn để quản lý tại đây!</p>
+            <a href="/FoodBooking-sell/sell.html" class="btn-add-product">Đăng bán sản phẩm</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+    <script>
+        fetch('components/footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+            });
+    </script>
+
+    <script type="module" src="js/firebase.js"></script>
+    <script type="module" src="js/myproducts.js"></script>
+</body>
+</html> 

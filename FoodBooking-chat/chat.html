@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <title>FoodBooking - Chat</title>
+    <link rel="stylesheet" href="css/chat.css" />
+    <link rel="shortcut icon" type="image/png" href="https://res.cloudinary.com/dhxabc6as/image/upload/v1750652035/web_logo_o0evny.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/7edc976cfd.js"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/footer.css" />
+  </head>
+  <body>
+    <div id="accountPopup" class="popup-account">
+      <div class="popup-content">
+        <span class="close-popup" onclick="closePopup()">&times;</span>
+        <h2>Thông tin tài khoản đang đăng nhập</h2>
+        <p><strong>Tên:</strong> <span id="userName">...</span></p>
+        <p><strong>Email:</strong> <span id="userEmail">...</span></p>
+        <div class="account-actions">
+          <button class="btn-manage-blocks" onclick="showBlockedUsers()">
+            <i class="bx bx-block"></i> Quản lý danh sách chặn
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <a href="/FoodBooking-login/login.html" class="btn-logout"
+      ><i class="bx bx-log-out"></i
+    ></a>
+    <button onclick="info()" class="btn-acc">
+      <i class="bx bx-user-circle"></i>
+    </button>
+
+    <div class="taskbar">
+      <a href="/FoodBooking-home/FoodBooking.html"
+        ><img src="https://res.cloudinary.com/dhxabc6as/image/upload/v1750578758/BetterImage_1750578615095_hpjyos.jpg" alt="logo" class="logo"
+      /></a>
+      <a href="/FoodBooking-search/product-search.html">
+        <div class="search-container">
+          <input class="find" type="text" placeholder="Tìm món ăn ở đây!" />
+          <i class="fas fa-search search-icon"></i>
+        </div>
+      </a>
+      <ul class="btn">
+        <li>
+          <a href="/FoodBooking-about/about.html" class="About">Thông tin</a>
+        </li>
+        <li>
+          <a href="/FoodBooking-product/product.html" class="Food"
+            >Sản phẩm</a
+          >
+        </li>
+        <li>
+          <a href="/FoodBooking-feedback/feedback.html" class="Evaluate"
+            >Liên hệ</a
+          >
+        </li>
+        <li>
+          <a href="/FoodBooking-basket/basket.html" class="Basket">Giỏ hàng</a>
+        </li>
+      </ul>
+    </div>
+    <div class="chat-main">
+      <div class="chat-sidebar">
+        <div class="chat-header">
+          <h1><i class="bx bx-message-rounded-dots"></i> Tin nhắn</h1>
+          <div class="chat-tabs">
+            <button class="chat-tab active" onclick="filterChats('all')">
+              <i class="bx bx-message-square"></i> Tất cả
+            </button>
+            <button class="chat-tab" onclick="filterChats('unread')">
+              <i class="bx bx-message-square-dots"></i> Chưa đọc
+            </button>
+            <button class="chat-tab" onclick="filterChats('recent')">
+              <i class="bx bx-time"></i> Gần đây
+            </button>
+          </div>
+        </div>
+        <div class="chat-search">
+          <div class="search-box">
+            <i class="bx bx-search"></i>
+            <input
+              type="text"
+              placeholder="Tìm kiếm cuộc trò chuyện..."
+              id="chatSearchInput"
+            />
+          </div>
+        </div>
+        <div class="chat-list" id="chatList"></div>
+        <div class="no-chats" id="noChats" style="display: none">
+          <i class="bx bx-message-rounded-x"></i>
+          <h3>Chưa có cuộc trò chuyện nào</h3>
+          <p>Bắt đầu chat với người bán để được tư vấn sản phẩm!</p>
+          <a
+            href="/FoodBooking-product/product.html"
+            class="btn-browse-products"
+          >
+            <i class="bx bx-store"></i> Xem sản phẩm
+          </a>
+        </div>
+      </div>
+      <div class="chat-content">
+        <div
+          class="chat-room-header"
+          id="chatRoomHeader"
+          style="display: none"
+        ></div>
+        
+        
+        <div class="room-menu-dropdown" id="roomMenuDropdown">
+          <div class="menu-item" onclick="deleteChat()">
+            <i class="bx bx-trash"></i>
+            <span>Xóa đoạn chat</span>
+          </div>
+          <div class="menu-item" onclick="blockUser()">
+            <i class="bx bx-block"></i>
+            <span>Chặn người này</span>
+          </div>
+          <div class="menu-item" onclick="reportUser()">
+            <i class="bx bx-flag"></i>
+            <span>Báo cáo</span>
+          </div>
+          <div class="menu-item" onclick="showBlockedUsers()">
+            <i class="bx bx-list-ul"></i>
+            <span>Quản lý danh sách chặn</span>
+          </div>
+        </div>
+        
+        <div class="chat-messages" id="chatMessages"></div>
+        <div
+          class="typing-indicator"
+          id="typingIndicator"
+          style="display: none"
+        >
+          <div class="message-avatar">
+            <img src="pic/demo-pic.jpg" alt="Seller" />
+          </div>
+          <div class="typing-bubble">
+            <div class="typing-dots">
+              <span></span><span></span><span></span>
+            </div>
+            <span class="typing-text">Đang nhập tin nhắn...</span>
+          </div>
+        </div>
+        <div
+          class="chat-input-container"
+          id="chatInputContainer"
+          style="display: none"
+        >
+          <div class="chat-input-wrapper">
+            <button class="btn-attach" onclick="attachFile()">
+              <i class="bx bx-paperclip"></i>
+            </button>
+            <div class="input-group">
+              <input
+                type="text"
+                id="messageInput"
+                placeholder="Nhập tin nhắn..."
+                maxlength="500"
+              />
+              <div class="input-actions">
+                <button class="btn-emoji" onclick="toggleEmoji()">
+                  <i class="bx bx-smile"></i>
+                </button>
+                <button
+                  class="btn-send"
+                  onclick="sendMessage()"
+                  id="sendButton"
+                >
+                  <i class="bx bx-send"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div
+            class="quick-actions"
+            id="quickActions"
+            style="display: none"
+          ></div>
+        </div>
+      </div>
+    </div>
+    <div id="footer-placeholder"></div>
+    
+    <!-- Modal danh sách người bị chặn -->
+    <div id="blockedUsersModal" class="blocked-users-modal">
+      <div class="blocked-users-content">
+        <div class="blocked-users-header">
+          <h3><i class="bx bx-block"></i> Danh sách người bị chặn</h3>
+          <button class="close-blocked-modal" onclick="closeBlockedUsersModal()">&times;</button>
+        </div>
+        <div id="blockedUsersList">
+          <!-- Danh sách người bị chặn sẽ được load ở đây -->
+        </div>
+      </div>
+    </div>
+    
+    <script>
+      fetch("components/footer.html")
+        .then((response) => response.text())
+        .then((data) => {
+          document.getElementById("footer-placeholder").innerHTML = data;
+        });
+    </script>
+    <script type="module" src="js/chat.js"></script>
+  </body>
+</html>

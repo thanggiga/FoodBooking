@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>FoodBooking-feedback</title>
+        <link rel="stylesheet" href="css/feedback.css">
+        <link rel="shortcut icon" type="image/png" href="https://res.cloudinary.com/dhxabc6as/image/upload/v1750652035/web_logo_o0evny.png"/>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/7edc976cfd.js" crossorigin="anonymous"></script>
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+        <link rel="stylesheet" href="css/footer.css">
+    </head>
+    <body>
+    <!-- task-bar -->
+    <div id="accountPopup" class="popup-account">
+        <div class="popup-content">
+            <span class="close-popup" onclick="closePopup()">&times;</span>
+            <h2>Thông tin tài khoản đang đăng nhập</h2>
+            <p><strong>Tên:</strong> <span id="userName">...</span></p>
+            <p><strong>Email:</strong> <span id="userEmail">...</span></p>
+        </div>
+        </div>
+
+    <div class="taskbar">
+        <a href="/FoodBooking-home/FoodBooking.html"><img src="https://res.cloudinary.com/dhxabc6as/image/upload/v1750578758/BetterImage_1750578615095_hpjyos.jpg" alt="logo" class="logo"></a>
+        <a href="/FoodBooking-search/product-search.html">
+            <div class="search-container">
+            <input class="find" type="text" placeholder="Tìm món ăn ở đây!">
+            <i class="fas fa-search search-icon"></i>
+        </div>
+        </a>
+        <ul class="btn">
+            <li><a href="/FoodBooking-about/about.html">Thông tin</a></li>
+            <li><a href="/FoodBooking-product/product.html" class="Food">Sản phẩm</a></li>
+            <li><a href="/FoodBooking-feedback/feedback.html">Liên hệ</a></li>
+            <li><a href="/FoodBooking-basket/basket.html">Giỏ hàng</a></li>
+        </ul>
+    </div>
+    <a href="/FoodBooking-login/login.html" class="btn-logout"><i class='bx bx-log-out'></i></a>
+    <button onclick="info()" class="btn-acc"><i class='bx bx-user-circle'></i></button>
+
+        <section class="review-section" id="review">
+            <h2 class="tag-review">Phản hồi / Yêu cầu tư vấn với bộ phận chăm sóc khách hàng của FoodBooking</h2>
+            
+            <div class="form-review">
+                <form class="freview" id="feedbackForm">
+                    <label class="form-text">Họ tên:</label>
+                    <input class="input" type="text" id="feedbackName" placeholder="Nhập họ tên của bạn" required> <br>
+                    <label class="form-text">Email:</label>
+                    <input class="input" type="email" id="feedbackEmail" placeholder="Nhập email của bạn" required> <br>
+                    <label class="form-text-review">Bạn muốn góp ý điều gì với chúng tôi?</label> <br>
+                    <textarea class="things" id="feedbackContent" placeholder="Nhập phản hồi của bạn..." required maxlength="1000"></textarea> 
+                    <div class="char-counter" id="charCounter">0/1000 ký tự</div>
+                    <br>
+                    
+                    <!-- Message containers -->
+                    <div class="success-message" id="successMessage">
+                        <i class="bx bx-check-circle"></i> Gửi phản hồi thành công!
+                    </div>
+                    <div class="error-message" id="errorMessage">
+                        <i class="bx bx-error-circle"></i> <span id="errorText">Có lỗi xảy ra!</span>
+                    </div>
+                    
+                    <button type="submit" class="btn-send" id="submitFeedback">
+                        <i class="bx bx-send"></i> Gửi phản hồi
+                    </button>
+                </form>
+            </div>
+            
+            <!-- Bottom container cho info và contact -->
+            <div class="bottom-container">
+                <div class="info">
+                    <p class="info-text">
+                        <i class="fa-sharp fa-solid fa-location-dot" 
+                        style="color: #dd3d3d; margin: 0px 4px 0px 3px;"></i>
+                        Địa chỉ: Yên Lũng, An Khánh, Hoài Đức, Hà Nội
+                    </p> 
+                    <p class="info-text">
+                        <i class="fa-solid fa-envelope" style="color: #4bca60;"></i>
+                        Email: truongducthang264211@gmail.com
+                    </p>
+                    <p class="info-text">
+                        <i class="fa-solid fa-phone" style="color: #73b4ff;"></i>
+                        Số điện thoại: 0946274812
+                    </p>
+                </div>
+                
+                <div class="contact-now">
+                    <p class="contact">Hoặc liên hệ trực tiếp với chúng tôi</p>
+                    <button class="btn-mes">
+                        <a href="https://www.facebook.com/people/Duc-Thangg/pfbid02JPk9UzgFSjwn39ufP8L9jd2UDbf8wg3MdvHVa1PJqHU65ABh7QB2LQ1DW57in4Gul/">
+                            <img class="mes" src="https://static-00.iconduck.com/assets.00/messenger-icon-2048x2048-x46zpl9t.png" alt="mes">
+                        </a>
+                    </button>
+                    <p class="zalo">Zalo: 0944115365</p>
+                </div>
+            </div>
+        </section>
+        <!-- footer -->
+        
+    <!-- Thay thế footer cũ bằng include footer mới -->
+    <div id="footer-placeholder"></div>
+    <script>
+        fetch('components/footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+            });
+    </script>
+    </body>
+    <script type="module" src="js/feedback.js"></script>
+</html>

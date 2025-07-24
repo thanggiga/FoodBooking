@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FoodBooking-Bán</title>
+    <link rel="stylesheet" href="css/sell.css">
+    <link rel="shortcut icon" type="image/png" href="./pic/web_logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/7edc976cfd.js" crossorigin="anonymous"></script>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="css/footer.css">
+</head>
+<body>
+    <!-- task-bar -->
+    <div id="accountPopup" class="popup-account">
+        <div class="popup-content">
+            <span class="close-popup" onclick="closePopup()">&times;</span>
+            <h2>Thông tin tài khoản đang đăng nhập</h2>
+            <p><strong>Tên:</strong> <span id="userName">...</span></p>
+            <p><strong>Email:</strong> <span id="userEmail">...</span></p>
+        </div>
+    </div>
+
+    <a href="../FoodBooking-login/login.html" class="btn-logout"><i class='bx bx-log-out'></i></a>
+    <button onclick="info()" class="btn-acc"><i class='bx bx-user-circle'></i></button>
+
+    <div class="taskbar">
+        <a href="../FoodBooking-home/FoodBooking.html"><img src="https://res.cloudinary.com/dhxabc6as/image/upload/v1750578758/BetterImage_1750578615095_hpjyos.jpg" alt="logo" class="logo"></a>
+        <a href="../FoodBooking-search/product-search.html">
+            <div class="search-container">
+                <input class="find" type="text" placeholder="Tìm món ăn ở đây!">
+                <i class="fas fa-search search-icon"></i>
+            </div>
+        </a>
+        <ul class="btn">
+            <li><a href="/FoodBooking-about/about.html">Thông tin</a></li>
+            <li><a href="/FoodBooking-product/product.html" class="Food">Sản phẩm</a></li>
+            <li><a href="/FoodBooking-feedback/feedback.html">Liên hệ</a></li>
+            <li><a href="/FoodBooking-basket/basket.html">Giỏ hàng</a></li>
+        </ul>
+    </div>
+
+    <!-- Form đăng sản phẩm -->
+    <form class="sell-form" id="sellForm">
+        <h2>Đăng bán món ăn</h2>
+        <label for="name">Tên món ăn</label>
+        <input type="text" id="name" required>
+
+        <label for="image">Hình ảnh (URL)</label>
+        <input type="url" id="imageUrl" placeholder="Tải hình ảnh đồ ăn hoặc đồ uống lên cloudinary rồi lấy url ảnh nhập vào ô này...  " required>
+
+        <label for="price">Giá (VNĐ)</label>
+        <input type="number" id="price" placeholder="Nhập giá bằng số, không chứa các chữ cái, dấu cách và . , " required>
+
+        <label for="category">Danh mục</label>
+        <select id="category" required>
+            <option value="">Chọn danh mục</option>
+            <option value="food">Đồ ăn</option>
+            <option value="drink">Đồ uống</option>
+            <option value="dessert">Tráng miệng</option>
+        </select>
+
+        <label for="description">Mô tả</label>
+        <textarea id="description" rows="4" placeholder="Mô tả ngắn về món ăn..." required></textarea>
+
+        <button type="submit">Gửi yêu cầu</button>
+    </form>
+
+    <!-- footer -->
+    
+    <!-- Thay thế footer cũ bằng include footer mới -->
+    <div id="footer-placeholder"></div>
+    <script>
+        fetch('components/footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+            });
+    </script>
+    <script type="module" src="js/sell.js"></script>
+</body>
+</html>

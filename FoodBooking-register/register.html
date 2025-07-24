@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>FoodBooking - Đăng ký</title>
+        <link rel="stylesheet" href="css/register.css">
+        <link rel="shortcut icon" type="image/png" href="https://res.cloudinary.com/dhxabc6as/image/upload/v1750652035/web_logo_o0evny.png"/>
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+        <script src="https://kit.fontawesome.com/7edc976cfd.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="css/footer.css">
+</head>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+        import {
+          getAuth,
+          createUserWithEmailAndPassword,
+          updateProfile,
+          GoogleAuthProvider,
+          signInWithPopup
+        } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+      
+        const firebaseConfig = {
+          apiKey: "AIzaSyCisUCcjEU0DVZs0xkRVjBqgFykm0Ayl1M",
+          authDomain: "foodbooking-dt2025.firebaseapp.com",
+          databaseURL: "https://foodbooking-dt2025-default-rtdb.asia-southeast1.firebasedatabase.app",
+          projectId: "foodbooking-dt2025",
+          storageBucket: "foodbooking-dt2025.firebasestorage.app",
+          messagingSenderId: "829019412638",
+          appId: "1:829019412638:web:7ec978e55f9d769d3bc38f",
+          measurementId: "G-P4MQBH2M1J"
+        };
+      
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+      
+        // Đăng ký bằng Email & Password
+        function check(event) {
+          event.preventDefault();
+      
+          const username = document.querySelector('.username').value.trim();
+          const email = document.querySelector('.email').value.trim();
+          const password = document.querySelector('.password').value.trim();
+      
+          if (!username || !email || !password) {
+            alert("Vui lòng nhập đầy đủ thông tin!");
+            return;
+          }
+      
+          if (!validateEmail(email)) {
+            alert("Email không hợp lệ!");
+            return;
+          }
+      
+          createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+              const user = userCredential.user;
+              return updateProfile(user, { displayName: username });
+            })
+            .then(() => {
+              alert("Đăng ký thành công!");
+              window.location.href = "/FoodBooking-login/login.html";
+            })
+            .catch((error) => {
+              if (error.code === "auth/email-already-in-use") {
+                alert("Email đã tồn tại.");
+              } else {
+                alert("Email đã tồn tại.");
+              }
+            });
+        }
+      
+        // Kiểm tra email
+        function validateEmail(email) {
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          return emailRegex.test(email);
+        }
+      
+        document.querySelector(".btn-regis").addEventListener("click", check);    
+    </script>      
+    <body>
+        <!-- taskbar -->
+        <button class="btn-info" onclick="showFooter()"><i class='bx bx-info-circle'></i></button>
+        <form class="regis">
+            <img class="logo_form" src="https://res.cloudinary.com/dhxabc6as/image/upload/v1750578758/BetterImage_1750578615095_hpjyos.jpg" alt="logo">
+            <div class="input-box">
+                <input type="text" class="username" placeholder="Tên người dùng" required>
+                <i class="fa-solid fa-user"></i>
+            </div>
+            <div class="input-box">
+                <input type="email" class="email" placeholder="Email" required>
+                <i class="fa-solid fa-envelope"></i>
+            </div>
+            <div class="input-box">
+                <input type="password" class="password" placeholder="Mật khẩu" required>
+                <i class="fa-solid fa-lock"></i>
+            </div>
+            <a href="#" type="submit" onclick="check(event)" class="btn-regis">Đăng ký</a>
+            <p class="acc">Đã có tài khoản? <a class="ok" href="/FoodBooking-login/login.html">Đăng nhập</a></p>
+        </form>
+        <!-- footer -->
+        
+    <!-- Thay thế footer cũ bằng include footer mới -->
+    <div id="footer-placeholder"></div>
+    <script>
+        fetch('components/footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+            });
+    </script>
+    </body>
+    <script src="js/register.js"></script>
+</html>

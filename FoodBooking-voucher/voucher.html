@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>FoodBooking-voucher</title>
+        <link rel="stylesheet" href="css/voucher.css">
+        <link rel="shortcut icon" type="image/png" href="https://res.cloudinary.com/dhxabc6as/image/upload/v1750652035/web_logo_o0evny.png"/>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/7edc976cfd.js" crossorigin="anonymous"></script>
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+        <link rel="stylesheet" href="css/footer.css">
+    </head>
+    <body>
+        <!-- task-bar -->
+         <div id="accountPopup" class="popup-account">
+        <div class="popup-content">
+            <span class="close-popup" onclick="closePopup()">&times;</span>
+            <h2>Thông tin tài khoản đang đăng nhập</h2>
+            <p><strong>Tên:</strong> <span id="userName">...</span></p>
+            <p><strong>Email:</strong> <span id="userEmail">...</span></p>
+        </div>
+        </div>
+
+        <a href="/FoodBooking-login/login.html" class="btn-logout"><i class='bx bx-log-out'></i></a>
+        <button onclick="info()" class="btn-acc"><i class='bx bx-user-circle' ></i></button>
+        <div class="taskbar">
+            <a href="/FoodBooking-home/FoodBooking.html"><img src="https://res.cloudinary.com/dhxabc6as/image/upload/v1750578758/BetterImage_1750578615095_hpjyos.jpg" alt="logo" class="logo"></a>
+            <a href="/FoodBooking-search/product-search.html">
+            <div class="search-container">
+            <input class="find" type="text" placeholder="Tìm món ăn ở đây!">
+            <i class="fas fa-search search-icon"></i>
+        </div>
+        </a>
+            <ul class="btn">
+                <li><a href="/FoodBooking-about/about.html">Thông tin</a></li>
+                <li><a href="/FoodBooking-product/product.html" class="Food">Sản phẩm</a></li>
+                <li><a href="/FoodBooking-feedback/feedback.html">Liên hệ</a></li>
+                <li><a href="/FoodBooking-basket/basket.html">Giỏ hàng</a></li>
+            </ul>
+        </div>
+        <!-- block of voucher -->
+        <h1 class="title-voucher">Kho Voucher</h1>
+        <section class="voucher">
+            <!-- Vouchers sẽ được load từ database -->
+        </section>
+
+        <!-- Modal thêm voucher (chỉ admin) -->
+        <div id="addVoucherModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeAddVoucherModal()">&times;</span>
+                <h2>Thêm Voucher Mới</h2>
+                <form id="addVoucherForm">
+                    <div class="form-group">
+                        <label for="voucherType">Loại voucher:</label>
+                        <select id="voucherType" required>
+                            <option value="discount">Voucher giảm giá</option>
+                            <option value="shipping">Voucher vận chuyển</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="voucherName">Tên voucher:</label>
+                        <input type="text" id="voucherName" required placeholder="Nhập tên voucher">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="voucherDescription">Mô tả:</label>
+                        <textarea id="voucherDescription" required placeholder="Nhập mô tả voucher"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="discountPercent">Phần trăm giảm giá (%):</label>
+                        <input type="number" id="discountPercent" min="1" max="100" required placeholder="Nhập % giảm giá">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="maxDiscount">Giảm giá tối đa (đ):</label>
+                        <input type="number" id="maxDiscount" min="0" placeholder="Để trống nếu không giới hạn">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="minOrder">Đơn hàng tối thiểu (đ):</label>
+                        <input type="number" id="minOrder" min="0" placeholder="Nhập giá trị tối thiểu">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="voucherCode">Mã voucher:</label>
+                        <input type="text" id="voucherCode" required placeholder="Nhập mã voucher">
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" onclick="addVoucher()" class="btn-primary">Thêm Voucher</button>
+                        <button type="button" onclick="closeAddVoucherModal()" class="btn-secondary">Hủy</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Modal sửa voucher (chỉ admin) -->
+        <div id="editVoucherModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeEditVoucherModal()">&times;</span>
+                <h2>Sửa Voucher</h2>
+                <form id="editVoucherForm">
+                    <input type="hidden" id="editVoucherKey">
+                    
+                    <div class="form-group">
+                        <label for="editVoucherType">Loại voucher:</label>
+                        <select id="editVoucherType" required>
+                            <option value="discount">Voucher giảm giá</option>
+                            <option value="shipping">Voucher vận chuyển</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="editVoucherName">Tên voucher:</label>
+                        <input type="text" id="editVoucherName" required placeholder="Nhập tên voucher">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="editVoucherDescription">Mô tả:</label>
+                        <textarea id="editVoucherDescription" required placeholder="Nhập mô tả voucher"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="editDiscountPercent">Phần trăm giảm giá (%):</label>
+                        <input type="number" id="editDiscountPercent" min="1" max="100" required placeholder="Nhập % giảm giá">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="editMaxDiscount">Giảm giá tối đa (đ):</label>
+                        <input type="number" id="editMaxDiscount" min="0" placeholder="Để trống nếu không giới hạn">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="editMinOrder">Đơn hàng tối thiểu (đ):</label>
+                        <input type="number" id="editMinOrder" min="0" placeholder="Nhập giá trị tối thiểu">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="editVoucherCode">Mã voucher:</label>
+                        <input type="text" id="editVoucherCode" required placeholder="Nhập mã voucher">
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" onclick="updateVoucher()" class="btn-primary">Cập nhật Voucher</button>
+                        <button type="button" onclick="closeEditVoucherModal()" class="btn-secondary">Hủy</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <section class="note-container">
+            <h1 class="note">Thông tin voucher</h1>
+            <p class="vfood">Đối với voucher giảm giá món ăn:</p>
+            <p class="new"><i class="fa-solid fa-tag" style="color: rgb(228, 206, 84)"></i> 
+            Voucher khách hàng mới sẽ khả dụng trong 2 ngày tiếp theo
+            từ khi khách hàng sử dụng voucher <br> -- Mỗi khách hàng mới chỉ có thể dùng 5
+            voucher này trong tuần</p>
+            <p class="tthiet"><i class="fa-solid fa-tag" style="color: rgb(221, 116, 116)"></i>
+            Voucher khách hàng thân thiết sẽ khả dụng trong 1 ngày tiếp theo từ khi khách hàng
+            sử dụng voucher <br> -- Mỗi khách hàng thân thiết chỉ có thể sử dụng 5 voucher này
+            trong tuần <br> Đặc biệt: Khách hàng gắn bó từ 1 năm trở lên có thể dùng 6 voucher trong tuần</p>
+            <p class="hour"><i class="fa-solid fa-tag" style="color: rgb(156, 79, 156)"></i>
+            Voucher theo khung giờ có thể được sử dụng theo giờ quy định trong voucher</p>
+            <p class="daily"><i class="fa-solid fa-tag" style="color: rgb(89, 168, 89)"></i>
+            Voucher hàng ngày có thể được sử dụng mỗi ngày một lần</p>
+            <p class="other">Các voucher khác khách hàng có thể sử dụng theo mô tả voucher</p>
+            <p class="vship">Đối với voucher vận chuyển:</p>
+            <p class="ship" style="position: relative; top: -10px;"><i class="fa-solid fa-tag" style="color: rgb(53, 153, 153);"></i>
+            Voucher vận chuyển có thể sử dụng mỗi ngày một lần</p>
+        </section>
+        <!-- footer -->
+        
+    <!-- Thay thế footer cũ bằng include footer mới -->
+    <div id="footer-placeholder"></div>
+    <script>
+        fetch('components/footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+            });
+    </script>
+        <script type="module" src="js/voucher.js"></script>
+    </body>
+</html>

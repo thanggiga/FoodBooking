@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <title>FoodBooking - Nhận phản hồi</title>
+  <link rel="stylesheet" href="css/recive.css" />
+  <link rel="shortcut icon" type="image/png" href="https://res.cloudinary.com/dhxabc6as/image/upload/v1750652035/web_logo_o0evny.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet" />
+  <script src="https://kit.fontawesome.com/7edc976cfd.js" crossorigin="anonymous"></script>
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="css/footer.css">
+</head>
+
+<body>
+  <div id="accountPopup" class="popup-account">
+    <div class="popup-content">
+      <span class="close-popup" onclick="closePopup()">&times;</span>
+      <h2>Thông tin tài khoản đang đăng nhập</h2>
+      <p><strong>Tên:</strong> <span id="userName">...</span></p>
+      <p><strong>Email:</strong> <span id="userEmail">...</span></p>
+    </div>
+  </div>
+
+  <a href="/FoodBooking-login/login.html" class="btn-logout"><i class='bx bx-log-out'></i></a>
+  <button onclick="info()" class="btn-acc"><i class='bx bx-user-circle'></i></button>
+
+  <div class="taskbar">
+    <a href="/FoodBooking-home/FoodBooking.html"><img src="https://res.cloudinary.com/dhxabc6as/image/upload/v1750578758/BetterImage_1750578615095_hpjyos.jpg" alt="logo" class="logo" /></a>
+    <a href="/FoodBooking-search/product-search.html">
+      <div class="search-container">
+        <input class="find" type="text" placeholder="Tìm món ăn ở đây!" />
+        <i class="fas fa-search search-icon"></i>
+      </div>
+    </a>
+    <ul class="btn">
+      <li><a href="/FoodBooking-about/about.html">Thông tin</a></li>
+      <li><a href="/FoodBooking-product/product.html" class="Food">Sản phẩm</a></li>
+      <li><a href="/FoodBooking-feedback/feedback.html">Liên hệ</a></li>
+      <li><a href="/FoodBooking-basket/basket.html">Giỏ hàng</a></li>
+    </ul>
+  </div>
+
+  <div class="main-content">
+    <div class="feedback-header">
+      <h1>Phản hồi từ người dùng</h1>
+      <p>Xem và tham gia thảo luận với cộng đồng FoodBooking</p>
+    </div>
+
+    <!-- Danh sách phản hồi -->
+    <div class="feedback-list-container">
+      <h2>Tất cả phản hồi</h2>
+      <div id="feedbackList" class="feedback-list">
+        <!-- Phản hồi sẽ được hiển thị ở đây -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Popup chi tiết phản hồi -->
+  <div id="feedbackPopup" class="popup-feedback">
+    <div class="popup-box">
+      <span class="close-popup" onclick="closeFeedbackPopup()">&times;</span>
+      <div class="popup-content-feedback">
+        <div class="popup-left">
+          <div class="feedback-details">
+            <h2 id="popupTitle"></h2>
+            <div class="feedback-meta">
+              <span id="popupAuthor"></span>
+              <span id="popupDate"></span>
+              <span id="popupType" class="type-badge"></span>
+            </div>
+            <p id="popupContent"></p>
+          </div>
+          
+          <!-- Phần bình luận -->
+          <div class="comments-section">
+            <h3>Bình luận</h3>
+            <div id="commentsList" class="comments-list">
+              <!-- Bình luận sẽ được render bằng JS ở đây -->
+            </div>
+            <div class="comment-form main-comment-form">
+              <textarea id="commentInput" placeholder="Viết bình luận của bạn..."></textarea>
+              <button id="submitComment">
+                <i class="fas fa-paper-plane"></i> Gửi bình luận
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="footer-placeholder"></div>
+  <script>
+    fetch('components/footer.html')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('footer-placeholder').innerHTML = data;
+      });
+  </script>
+
+  <script type="module" src="js/firebase.js"></script>
+  <script type="module" src="js/recive.js"></script>
+</body>
+</html>
