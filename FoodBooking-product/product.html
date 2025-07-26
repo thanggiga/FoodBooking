@@ -34,16 +34,26 @@
         <i class="fas fa-search search-icon"></i>
       </div>
     </a>
+    <button class="menu-toggle" id="menu-toggle" aria-label="Mở menu">
+      <i class='bx bx-menu'></i>
+    </button>
     <ul class="btn">
       <li><a href="/FoodBooking-about/about.html">Thông tin</a></li>
       <li><a href="/FoodBooking-product/product.html" class="Food">Sản phẩm</a></li>
       <li><a href="/FoodBooking-feedback/feedback.html">Liên hệ</a></li>
       <li><a href="/FoodBooking-basket/basket.html">Giỏ hàng</a></li>
     </ul>
+    <div class="mobile-menu" id="mobile-menu">
+      <a href="/FoodBooking-about/about.html">Thông tin</a>
+      <a href="/FoodBooking-product/product.html">Sản phẩm</a>
+      <a href="/FoodBooking-feedback/feedback.html">Liên hệ</a>
+      <a href="/FoodBooking-basket/basket.html">Giỏ hàng</a>
+      <a href="/FoodBooking-search/product-search.html">Tìm kiếm</a>
+    </div>  
   </div>
 
   <div class="filter-section">
-    <h2 class="section-title">Danh mục sản phẩm</h2>
+    <h2 class="filter-title">Danh mục sản phẩm</h2>
     <div class="filter-tabs">
       <button class="filter-tab active" onclick="filterProducts('all')">
         <i class='bx bx-grid-alt'></i> Tất cả
@@ -76,6 +86,14 @@
         <p><strong>Tên shop:</strong> cửa hàng bánh mì Hà Nội</p>
         <p><strong>Địa chỉ:</strong> Nam Từ Liêm - Hà Nội</p>
         <p><strong>Thời gian giao hàng dự kiến:</strong> 10 - 20 phút</p>
+        <div class="product-ingredients">
+          <strong>Nguyên liệu:</strong>
+          <ul id="popupIngredients"></ul>
+        </div>
+        <div class="product-nutrition">
+          <strong>Các chất dinh dưỡng:</strong>
+          <ul id="popupNutrition"></ul>
+        </div>
         <button onclick="addToBasket()" class="add-to-basket-btn">Thêm vào giỏ hàng</button>
         <button onclick="chatWithSeller()" class="chat-seller-btn"><i class='bx bx-chat'></i> Chat với người bán</button>
       </div>
@@ -123,6 +141,18 @@
             window.location.href = "/FoodBooking-login/login.html";
         }
     }
+  </script>
+  <script>
+    document.getElementById('menu-toggle').onclick = function() {
+      document.getElementById('mobile-menu').classList.toggle('active');
+    };
+    document.addEventListener('click', function(event) {
+      const menu = document.getElementById('mobile-menu');
+      const toggle = document.getElementById('menu-toggle');
+      if (!menu.contains(event.target) && !toggle.contains(event.target)) {
+        menu.classList.remove('active');
+      }
+    });
   </script>
 </body>
 </html>

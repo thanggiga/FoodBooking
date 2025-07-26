@@ -1136,8 +1136,61 @@ ul.btn.active {
 }
 
 @media (max-width: 700px) {
-  .search-btn {
-    right: 10px;
+  .features {
+    font-size: 18px;
+  }
+  .feature-item {
+    font-size: 18px;
+  }
+  .section-title {
+    font-size: 35px;
+  }
+
+  .categories {
+    font-size: 18px;
+  }
+  .category-item {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 630px) {
+  #chose {
+    margin-left: 25px; 
+  }
+  .choices {
+    display: flex;
+    justify-content: center;
+    margin-left: 65px; 
+  }
+}
+
+@media (max-width: 420px) {
+  .text-spon {
+    font-size: 12px;
+    font-weight: bold;
+  }
+  #logo-menu {
+    font-size: 40px;
+  }
+  .menu {
+    margin-bottom: -45px;
+  }
+  #chose {
+    margin-left: 10px;
+  }
+  .choices {
+    margin: 0 -30px 0 30px;
+  }
+  .slogan-div {
+    font-size: 7.2px;
+    top: 100px;
+  }
+  header {
+    height: 300px;
+  }
+  .well {
+    font-size: 25px;
   }
 }
 
@@ -1205,10 +1258,6 @@ body {
   font-weight: bold;
 }
 
-.search-btn {
-  display: none; 
-  background: none;
-  border: none;
-  color: black;
-  font-size: 40px;
+.text-spon {
+  font-weight: bold;
 }

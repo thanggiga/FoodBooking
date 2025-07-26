@@ -135,7 +135,7 @@ body {
 /* product */
 .product {
     display: grid;
-    grid-template-columns: repeat(5, 1fr); /* 5 sản phẩm trên 1 hàng */
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     justify-items: center;
     margin-top: 50px;
     align-items: center;
@@ -685,34 +685,6 @@ footer {
     border-radius: 15px;
 }
 
-/* Responsive design */
-@media (max-width: 768px) {
-    .btn-sell, .btn-admin {
-        display: block;
-        margin: 10px auto;
-        min-width: 180px;
-        padding: 12px 25px;
-        font-size: 14px;
-    }
-    
-    .sell, .admin {
-        font-size: 16px;
-        margin: 15px 0 8px 0;
-    }
-}
-
-@media (max-width: 480px) {
-    .btn-sell, .btn-admin {
-        min-width: 160px;
-        padding: 10px 20px;
-        font-size: 13px;
-    }
-    
-    .sell, .admin {
-        font-size: 15px;
-    }
-}
-
 .btn-myproducts {
     background: linear-gradient(135deg, #9c27b0, #673ab7);
     color: white;
@@ -731,7 +703,7 @@ footer {
     text-align: center;
 }
 
-.section-title {
+.filter-title {
     color: #333;
     font-size: 2rem;
     margin-bottom: 30px;
@@ -776,33 +748,6 @@ footer {
 
 .filter-tab:active {
     transform: translateY(0);
-}
-
-/* Responsive for filter tabs */
-@media (max-width: 768px) {
-    .filter-tabs {
-        gap: 10px;
-    }
-    
-    .filter-tab {
-        padding: 10px 20px;
-        font-size: 14px;
-    }
-    
-    .filter-tab i {
-        font-size: 16px;
-    }
-}
-
-@media (max-width: 480px) {
-    .filter-tabs {
-        flex-direction: column;
-        align-items: center;
-    }
-    
-    .filter-tab {
-        width: 200px;
-    }
 }
 
 .chat-seller-btn {
@@ -864,4 +809,182 @@ footer {
 
 .floating-chat-btn:active {
     transform: scale(0.95);
+}
+
+.product-ingredients, .product-nutrition {
+  margin-top: 15px;
+  margin-bottom: 10px;
+  background: #fff8e1;
+  border-radius: 10px;
+  padding: 12px 18px;
+  box-shadow: 0 2px 8px rgba(255, 204, 0, 0.07);
+}
+.product-ingredients strong, .product-nutrition strong {
+  color: #b8860b;
+  font-size: 18px;
+}
+.product-ingredients ul, .product-nutrition ul {
+  margin: 8px 0 0 0;
+  padding-left: 18px;
+  font-size: 16px;
+}
+.product-ingredients li, .product-nutrition li {
+  margin-bottom: 3px;
+  color: #333;
+  list-style: disc inside;
+}
+
+/* responsive */
+@media (max-width: 1700px) {
+  .search-container {
+    width: 500px;
+  }
+  .btn li a {
+    margin-left: -10px;
+  }
+  .product {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    justify-items: center;
+    margin-top: 50px;
+    align-items: center;
+  }
+}
+
+@media (max-width: 1560px) {
+  .search-container {
+    width: 400px;
+    margin-left: 10px;
+  }
+  .btn li a {
+    margin-left: -25px;
+  }
+}
+
+@media (max-width: 1310px) {
+  .btn li a {
+    font-size: 20px;
+  }
+  .find {
+    font-size: 18px;
+  }
+  .logo {
+    width: 180px;
+  }
+}
+
+@media (max-width: 1220px) {
+  .btn li a {
+    font-size: 18px;
+    font-weight: bold;
+  }
+}
+
+@media (max-width: 1200px) {
+  .btn {
+    display: none;
+  }
+  .menu-toggle {
+    display: block !important;
+    position: relative;
+    right: 125px;
+    top: 3px;
+  }
+  .search-container {
+    margin-left: -100px;
+    width: 650px;
+  }
+}
+
+@media (max-width: 1060px) {
+  .search-container {
+    width: 400px;
+    margin-left: -110px;
+  }
+}
+
+@media (max-width: 800px) {
+  .search-container {
+    width: 235px;
+  }
+}
+
+@media (max-width: 640px) {
+  .search-container {
+    display: none;
+  }
+  .menu-toggle {
+    right: 135px;
+  }
+  .filter-title {
+    font-size: 1.75rem;
+  }
+  .filter-tab {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 500px) {
+  .filter-title {
+    font-size: 1.5rem;
+  }
+  .filter-tab {
+    font-size: 13.5px;
+    font-weight: bold;
+  }
+  .logo {
+    width: 150px;
+    margin-left: 10px;
+  }
+}
+
+.menu-toggle {
+  display: none; 
+  background: none;
+  border: none;
+  color: black;
+  font-size: 40px;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+.mobile-menu {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 65px;
+  right: 80px;
+  background: #ffffff;
+  width: 240px;
+  border-radius: 15px;
+  z-index: 999;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  /* Animation */
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  pointer-events: none;
+  transition: max-height 0.4s ease, opacity 0.3s ease;
+}
+
+.mobile-menu.active {
+  max-height: 500px;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.mobile-menu a {
+  padding: 14px 20px;
+  text-decoration: none;
+  color: #333;
+  font-size: 18px;
+  border-radius: 8px;
+  transition: background 0.3s ease, padding-left 0.3s ease;
+}
+
+.mobile-menu a:hover {
+  background-color: #f0f0f0;
+  padding-left: 25px;
+  color: #e68a00;
+  font-weight: bold;
 }

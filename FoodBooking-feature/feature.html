@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Tư vấn chế độ ăn</title>
+    <link rel="stylesheet" href="css/feature.css" />
+    <link
+      rel="shortcut icon"
+      type="image/png"
+      href="https://res.cloudinary.com/dhxabc6as/image/upload/v1750652035/web_logo_o0evny.png"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/7edc976cfd.js"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/footer.css" />
+  </head>
+
+  <body>
+    <div class="taskbar">
+      <a href="/FoodBooking-home/FoodBooking.html">
+        <img
+          src="https://res.cloudinary.com/dhxabc6as/image/upload/v1750578758/BetterImage_1750578615095_hpjyos.jpg"
+          alt="logo"
+          class="logo"
+        />
+      </a>
+      <a href="/FoodBooking-search/product-search.html">
+        <div class="search-container">
+          <input class="find" type="text" placeholder="Tìm món ăn ở đây!" />
+          <i class="fas fa-search search-icon"></i>
+        </div>
+      </a>
+      <ul class="btn">
+        <li><a href="/FoodBooking-about/about.html">Thông tin</a></li>
+        <li><a href="/FoodBooking-product/product.html">Sản phẩm</a></li>
+        <li><a href="/FoodBooking-feedback/feedback.html">Liên hệ</a></li>
+        <li><a href="/FoodBooking-basket/basket.html">Giỏ hàng</a></li>
+      </ul>
+      <a href="/FoodBooking-login/login.html" class="btn-logout"
+        ><i class="bx bx-log-out"></i
+      ></a>
+      <button class="btn-acc"><i class="bx bx-user-circle"></i></button>
+    </div>
+
+    <section class="hero-section">
+      <h1>Khám phá chế độ ăn phù hợp với bạn!</h1>
+      <p>
+        Tư vấn chế độ ăn uống thông minh cho sức khoẻ, vóc dáng và phong cách
+        sống.
+      </p>
+      <button class="cta-btn">Khám phá ngay</button>
+    </section>
+
+    <section class="menu-grid">
+      <div class="menu-card">
+        <img
+          src="https://res.cloudinary.com/dhxabc6as/image/upload/v1753501676/6d28a376-2fd8-4e63-8e47-b3ebccd9f4cc.png"
+          alt="Giảm cân"
+        />
+        <h3>Chế độ ăn giảm cân</h3>
+        <p>Giúp giảm mỡ hiệu quả mà vẫn đảm bảo dinh dưỡng.</p>
+      </div>
+      <div class="menu-card">
+        <img
+          src="https://res.cloudinary.com/dhxabc6as/image/upload/v1753501972/ea262815-eef4-4e58-8909-7719baad05ff.png"
+          alt="Tăng cơ"
+        />
+        <h3>Chế độ tăng cơ</h3>
+        <p>Phù hợp cho người tập gym và vận động viên.</p>
+      </div>
+      <div class="menu-card">
+        <img
+          src="https://res.cloudinary.com/dhxabc6as/image/upload/v1753502031/b69dbd08-8637-44d0-927a-0ffaea1f4cbb.png"
+          alt="Tiểu đường"
+        />
+        <h3>Ăn kiêng cho người tiểu đường</h3>
+        <p>Thực đơn an toàn, kiểm soát đường huyết tốt.</p>
+      </div>
+      <div class="menu-card">
+        <img
+          src="https://res.cloudinary.com/dhxabc6as/image/upload/v1753502096/e9cf3b55-e23b-4da4-a5ac-7c9caa240d12.png"
+          alt="Tim mạch"
+        />
+        <h3>Chế độ ăn cho tim mạch</h3>
+        <p>Hạn chế cholesterol, tăng cường trái tim khoẻ mạnh.</p>
+      </div>
+      <div class="menu-card">
+        <img
+          src="https://res.cloudinary.com/dhxabc6as/image/upload/v1753502552/c6751272-2156-4f54-97ef-cbb2bce1a68c.png"
+          alt="Khẩu vị vùng miền"
+        />
+        <h3>Ăn uống theo khẩu vị</h3>
+        <p>Lựa chọn món phù hợp với khẩu vị Bắc, Trung, Nam.</p>
+      </div>
+      <div class="menu-card">
+        <img
+          src="https://res.cloudinary.com/dhxabc6as/image/upload/v1753502395/40ea9482-c7b6-493f-b7a1-7aa3706f569c.png"
+          alt="Tính calo"
+        />
+        <h3>Theo dõi calo</h3>
+        <p>Tính toán lượng calo hợp lý cho mỗi ngày.</p>
+      </div>
+    </section>
+
+    <section class="form-section">
+      <h2>Thông tin tư vấn chế độ ăn</h2>
+      <form>
+        <div class="form-group">
+          <label for="name">Họ và tên:</label>
+          <input type="text" id="name" name="name" required />
+        </div>
+        <div class="form-group">
+          <label for="age">Tuổi:</label>
+          <input type="number" id="age" name="age" required />
+        </div>
+        <div class="form-group">
+          <label for="goal">Mục tiêu:</label>
+          <select id="goal" name="goal">
+            <option value="">-- Chọn mục tiêu --</option>
+            <option value="weight_loss">Giảm cân</option>
+            <option value="muscle_gain">Tăng cơ</option>
+            <option value="health">Cải thiện sức khoẻ</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="note">Ghi chú thêm:</label>
+          <textarea placeholder="Các loại bệnh nền, mong muốn..." id="note" name="note" rows="4"></textarea>
+        </div>
+        <button type="submit">Gửi thông tin</button>  
+      </form>
+    </section>
+
+    <div id="footer-placeholder"></div>
+    <script>
+      fetch("components/footer.html")
+        .then((response) => response.text())
+        .then((data) => {
+          document.getElementById("footer-placeholder").innerHTML = data;
+        });
+    </script>
+    <script src="js/feature.js"></script>
+  </body>
+</html>

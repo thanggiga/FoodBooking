@@ -72,6 +72,17 @@ document.querySelector('.btn-logout').onclick = function() {
     auth.signOut();
 };
 
+document.addEventListener("DOMContentLoaded", () => {
+    const accPopup = document.getElementById("accountPopup");
+    if (accPopup) {
+        accPopup.addEventListener("mousedown", function(e) {
+            if (e.target === accPopup) {
+                closePopup();
+            }
+        });
+    }
+});
+
 // --- Kiểm tra người dùng có bị chặn không ---
 async function isUserBlocked(otherUserId) {
     const currentUid = getCurrentUser().uid;

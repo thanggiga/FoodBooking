@@ -24,3 +24,18 @@ function closePopup() {
 
 window.info = info;
 window.closePopup = closePopup;
+
+document.addEventListener("DOMContentLoaded", () => {
+  const menuToggle = document.getElementById('menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+  if (menuToggle && mobileMenu) {
+    menuToggle.onclick = function() {
+      mobileMenu.classList.toggle('active');
+    };
+    document.addEventListener('click', function(event) {
+      if (!mobileMenu.contains(event.target) && !menuToggle.contains(event.target)) {
+        mobileMenu.classList.remove('active');
+      }
+    });
+  }
+});

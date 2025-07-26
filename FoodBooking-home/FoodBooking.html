@@ -55,7 +55,9 @@
               <i class="fas fa-search search-icon"></i>
             </div>
         </a>
-        <button class="search-btn" onclick="window.location.href='/FoodBooking-search/product-search.html'"><i class="fas fa-search search-icon"></i></button> 
+        <button class="menu-toggle" id="menu-toggle" aria-label="Mở menu">
+            <i class='bx bx-menu'></i>
+        </button>
         <ul class="btn" id="nav-links">
             <li><a href="/FoodBooking-about/about.html" class="About">Thông tin</a></li>
             <li><a href="/FoodBooking-product/product.html" class="Food">Sản phẩm</a></li>           
@@ -67,10 +69,8 @@
           <a href="/FoodBooking-product/product.html">Sản phẩm</a>
           <a href="/FoodBooking-feedback/feedback.html">Liên hệ</a>
           <a href="/FoodBooking-basket/basket.html">Giỏ hàng</a>
+          <a href="/FoodBooking-search/product-search.html">Tìm kiếm</a>
         </div>        
-        <button class="menu-toggle" id="menu-toggle">
-            <i class='bx bx-menu'></i>
-        </button>
     </div>
     <a href="/FoodBooking-login/login.html" class="btn-logout"><i class='bx bx-log-out'></i></a>
     <button class="btn-acc"><i class='bx bx-user-circle'></i></button>
@@ -124,7 +124,7 @@
                 <label class="text-spon">Về chúng tôi</label>
             </div>
 
-            <div class="info-menu" id="chose" style="margin-right: -10px;">
+            <div class="feedback-menu" id="chose" style="margin-right: -10px;">
                 <a href="/FoodBooking-feedback/feedback.html"><i style="color: burlywood;" class="fa-solid fa-comments"
                     id="logo-menu"></i></a> <br>
                 <label class="text-spon">Góp ý</label>
@@ -264,6 +264,18 @@
     <script src="js/FoodBooking.js" defer></script>
     <script src="js/jquery.waypoints.min.js"></script>
     <script src="js/chatbot.js"></script>
+    <script>
+      document.getElementById('menu-toggle').onclick = function() {
+        document.getElementById('mobile-menu').classList.toggle('active');
+      };
+      document.addEventListener('click', function(event) {
+        const menu = document.getElementById('mobile-menu');
+        const toggle = document.getElementById('menu-toggle');
+        if (!menu.contains(event.target) && !toggle.contains(event.target)) {
+          menu.classList.remove('active');
+        }
+      });
+    </script>
 </body>
 
 </html>

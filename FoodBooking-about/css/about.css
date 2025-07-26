@@ -212,3 +212,103 @@ footer {
     position: relative;
     bottom: -180px;
 }
+
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: black;
+  font-size: 40px;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+.mobile-menu {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 65px;
+  right: 80px;
+  background: #ffffff;
+  width: 240px;
+  border-radius: 15px;
+  z-index: 999;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  pointer-events: none;
+  transition: max-height 0.4s ease, opacity 0.3s ease;
+}
+
+.mobile-menu.active {
+  max-height: 500px;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.mobile-menu a {
+  padding: 14px 20px;
+  text-decoration: none;
+  color: #333;
+  font-size: 18px;
+  border-radius: 8px;
+  transition: background 0.3s ease, padding-left 0.3s ease;
+}
+
+.mobile-menu a:hover {
+  background-color: #f0f0f0;
+  padding-left: 25px;
+  color: #e68a00;
+  font-weight: bold;
+}
+
+.search-btn {
+  display: none;
+  border: none;
+  color: black;
+  font-size: 40px;
+}
+
+@media (max-width: 1040px) {
+  .menu-toggle {
+    display: block !important;
+    position: relative;
+    top: 3px;
+    right: 155px;
+    background: none;
+    border: none;
+    color: black;
+    font-size: 40px;
+    cursor: pointer;
+    z-index: 1001;
+  }
+  ul.btn {
+    display: none;
+    transition: max-height 0.4s cubic-bezier(.4,0,.2,1);
+    max-height: 0;
+    overflow: hidden;
+  }
+  ul.btn.active {
+    max-height: 300px;
+  }
+  .search-container {
+    width: 500px !important;
+    margin-left: -200px;
+  }
+}
+
+@media (max-width: 750px) {
+  .search-container {
+    display: none;
+  }
+  .search-btn {
+    display: block !important;
+    position: relative;
+    right: 100px;
+    background: none;
+    border: none;
+    color: black;
+    font-size: 40px;
+  }
+}

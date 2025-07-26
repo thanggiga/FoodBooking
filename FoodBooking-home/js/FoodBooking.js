@@ -1,13 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const menuToggle = document.getElementById('menu-toggle');
-    const mobileMenu = document.getElementById('mobile-menu');
-    
-    if (menuToggle && mobileMenu) {
-        menuToggle.addEventListener('click', () => {
-            mobileMenu.classList.toggle('active');
-        });
-    }    
-
+document.addEventListener("DOMContentLoaded", () => { 
     //Account Popup Logic
     const accountButton = document.querySelector('.btn-acc');
     const accountPopup = document.getElementById('accountPopup');
@@ -20,6 +11,12 @@ document.addEventListener("DOMContentLoaded", () => {
             } else {
                 alert("Bạn cần đăng nhập để xem thông tin tài khoản.");
                 window.location.href = "/FoodBooking-login/login.html";
+            }
+        });
+        // Đóng popup khi nhấn ra ngoài vùng popup-content
+        accountPopup.addEventListener('mousedown', function(e) {
+            if (e.target === accountPopup) {
+                closePopup();
             }
         });
     }

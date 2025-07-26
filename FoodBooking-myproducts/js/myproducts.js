@@ -24,6 +24,15 @@ function checkLogin() {
 // Kiểm tra đăng nhập khi load trang
 document.addEventListener("DOMContentLoaded", () => {
     checkLogin();
+    // Đóng popup tài khoản khi nhấn ra ngoài vùng popup-content
+    const accPopup = document.getElementById("accountPopup");
+    if (accPopup) {
+        accPopup.addEventListener("mousedown", function(e) {
+            if (e.target === accPopup) {
+                closePopup();
+            }
+        });
+    }
 });
 
 // Lấy sản phẩm của người dùng hiện tại
@@ -254,17 +263,4 @@ window.info = function() {
 // Đóng popup thông tin tài khoản
 window.closePopup = function() {
     document.getElementById("accountPopup").style.display = "none";
-}
-
-// Đóng popup khi click bên ngoài
-window.onclick = function(event) {
-    const accountPopup = document.getElementById("accountPopup");
-    const editPopup = document.getElementById("editProductPopup");
-    
-    if (event.target === accountPopup) {
-        accountPopup.style.display = "none";
-    }
-    if (event.target === editPopup) {
-        editPopup.style.display = "none";
-    }
 } 
