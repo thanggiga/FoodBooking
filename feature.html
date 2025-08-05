@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Tư vấn chế độ ăn</title>
+    <link rel="stylesheet" href="css/feature.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/footer.css" />
+    <link
+      rel="shortcut icon"
+      type="image/png"
+      href="https://res.cloudinary.com/dhxabc6as/image/upload/v1750652035/web_logo_o0evny.png"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/7edc976cfd.js"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="accountPopup" class="popup-account">
+      <div class="popup-content">
+        <span class="close-popup" onclick="closePopup()">&times;</span>
+        <h2>Thông tin tài khoản đang đăng nhập</h2>
+        <p><strong>Tên:</strong> <span id="userName">...</span></p>
+        <p><strong>Email:</strong> <span id="userEmail">...</span></p>
+      </div>
+    </div>
+    <!-- taskbar -->
+    <div class="taskbar">
+      <a href="index.html">
+        <img
+          src="https://res.cloudinary.com/dhxabc6as/image/upload/v1750578758/BetterImage_1750578615095_hpjyos.jpg"
+          alt="logo"
+          class="logo"
+        />
+      </a>
+      <a href="product-search.html">
+        <div class="search-container">
+          <input class="find" type="text" placeholder="Tìm món ăn ở đây!" />
+          <i class="fas fa-search search-icon"></i>
+        </div>
+      </a>
+      <ul class="btn">
+        <li><a href="about.html">Thông tin</a></li>
+        <li><a href="product.html">Sản phẩm</a></li>
+        <li><a href="feedback.html">Liên hệ</a></li>
+        <li><a href="basket.html">Giỏ hàng</a></li>
+      </ul>
+      <a href="login.html" class="btn-logout"><i class="bx bx-log-out"></i></a>
+      <button class="btn-acc"><i class="bx bx-user-circle"></i></button>
+    </div>
+
+    <main class="feature-main">
+      <section class="feature-hero">
+        <h1>Tư vấn bữa ăn</h1>
+        <p>
+          Chọn món ăn bạn yêu thích, nhập thông tin sức khỏe và mục tiêu của bạn, <br>
+          FoodBooking AI sẽ tư vấn và cho bạn lời khuyên tốt nhất 
+        </p>
+      </section>
+
+      <section class="feature-select">
+        <button id="btnOpenProductPopup" class="btn-main">
+          Chọn món ăn từ FoodBooking
+        </button>
+        <div id="selectedProductsBox" class="selected-products-box">
+          <h3>Các món đã chọn:</h3>
+          <div id="selectedProductsList" class="selected-products-list"></div>
+          <button
+            id="btnAddMoreProduct"
+            class="btn-secondary"
+            style="display: none"
+          >
+            Chọn thêm món
+          </button>
+        </div>
+      </section>
+
+      <section class="feature-userinfo">
+        <h2>Thông tin sức khỏe & mục tiêu</h2>
+        <div class="userinfo-form">
+          <input
+            type="number"
+            id="userAge"
+            placeholder="Tuổi"
+            class="input-main"
+            min="1"
+          />
+          <select id="userGoal" class="input-main">
+            <option value="">-- Mục tiêu --</option>
+            <option value="weight_loss">Giảm cân</option>
+            <option value="muscle_gain">Tăng cơ</option>
+            <option value="health">Cải thiện sức khỏe</option>
+          </select>
+          <textarea
+            id="userNote"
+            placeholder="Bệnh nền, khẩu vị, lưu ý..."
+            class="input-main"
+          ></textarea>
+        </div>
+        <button id="btnAskAI" class="btn-main">Hỏi AI tư vấn</button>
+        <div id="aiLoading" class="ai-loading" style="display: none">
+          ⏳ Đang hỏi AI...
+        </div>
+        <div id="aiAdviceResult" class="ai-advice-result"></div>
+      </section>
+
+      <section
+        class="feature-actions"
+        style="display: none"
+        id="featureActions"
+      >
+        <button id="btnAddAllToCart" class="btn-main">
+          🛒 Thêm tất cả vào giỏ hàng
+        </button>
+      </section>
+    </main>
+
+    <!-- Popup chọn sản phẩm -->
+    <div id="productPopupSelector" class="popup-container">
+      <div class="popup-box">
+        <span class="popup-close" id="closeProductPopupSelector">×</span>
+        <h2>Chọn món ăn</h2>
+        <div id="popupProductList" class="product-list"></div>
+      </div>
+    </div>
+
+    <!-- Popup chi tiết sản phẩm -->
+    <div id="productPopupDetail" class="popup-container">
+      <div class="popup-box">
+        <span class="popup-close" id="closeProductPopupDetail">×</span>
+        <div class="popup-detail-content">
+          <div class="popup-detail-img">
+            <img id="popupDetailImage" src="" alt="Ảnh sản phẩm" />
+          </div>
+          <div class="popup-detail-info">
+            <h2 id="popupDetailName"></h2>
+            <p id="popupDetailPrice" class="popup-price"></p>
+            <div class="popup-detail-nutrition">
+              <strong>Chất dinh dưỡng:</strong>
+              <ul id="popupDetailNutrition"></ul>
+            </div>
+            <div class="popup-detail-ingredients">
+              <strong>Nguyên liệu:</strong>
+              <ul id="popupDetailIngredients"></ul>
+            </div>
+            <button id="btnAddProduct" class="btn-main">Thêm</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+    <script>
+      fetch("components/footer.html")
+        .then((response) => response.text())
+        .then((data) => {
+          document.getElementById("footer-placeholder").innerHTML = data;
+        });
+    </script>
+    <script type="module" src="js/feature.js"></script>
+    <div id="customAlert" class="custom-alert" style="display: none">
+      <div class="custom-alert-box">
+        <span id="customAlertMsg"></span>
+        <button id="customAlertClose">Đóng</button>
+      </div>
+    </div>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+  const btnAcc = document.querySelector('.btn-acc');
+  const accountPopup = document.getElementById('accountPopup');
+  if (btnAcc && accountPopup) {
+    btnAcc.onclick = function() {
+      window.info();
+      accountPopup.classList.add('active');
+    };
+    accountPopup.addEventListener('mousedown', function(e) {
+      if (e.target === accountPopup) {
+        closePopup();
+      }
+    });
+  }
+});
+window.closePopup = function() {
+  const accountPopup = document.getElementById('accountPopup');
+  if (accountPopup) accountPopup.classList.remove('active');
+};
+    </script>
+  </body>
+</html>

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>FoodBooking</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/png" href="https://res.cloudinary.com/dhxabc6as/image/upload/v1750652035/web_logo_o0evny.png" />
+    <link rel="stylesheet" href="css/FoodBooking.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
+        rel="stylesheet">
+    <script src="https://kit.fontawesome.com/7edc976cfd.js" crossorigin="anonymous"></script>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/footer.css">
+</head>
+<body>
+    <!-- Chatbot AI -->
+    <div id="chatbot-icon" onclick="toggleChatbot()">
+        <i class='bx bx-bot'></i>
+    </div>
+
+    <div id="chatbot-container" class="chatbot-hidden">
+        <div class="chatbot-header">
+            <h3>🤖 FoodBooking AI</h3>
+            <button onclick="toggleChatbot()" class="close-btn">×</button>
+        </div>  
+        <div id="chatbot-messages" class="chatbot-messages">
+            <div class="message bot-message">
+                <div class="message-content">
+                    Xin chào! Tôi là AI Assistant của FoodBooking. Tôi có thể giúp bạn:
+                    <br>• Gợi ý món ăn theo sở thích
+                    <br>• Tư vấn món ăn theo thời tiết
+                    <br>• Hướng dẫn đặt hàng
+                    <br>• Trả lời thắc mắc về dịch vụ
+                    <br><br>Bạn muốn tôi giúp gì?
+                </div>
+            </div>
+        </div>
+        <div class="chatbot-input">
+            <input type="text" id="user-input" placeholder="Nhập tin nhắn..." onkeypress="handleKeyPress(event)">
+            <button onclick="sendMessage()" class="send-btn">
+                <i class='bx bx-send'></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- taskbar -->
+    <div class="taskbar">
+        <a href="#home"><img src="https://res.cloudinary.com/dhxabc6as/image/upload/v1750578758/BetterImage_1750578615095_hpjyos.jpg" alt="logo" class="logo"></a>
+        <a href="product-search.html">
+            <div class="search-container">
+              <input class="find" type="text" placeholder="Lên FoodBooking tìm chút đồ ăn nào...">
+              <i class="fas fa-search search-icon"></i>
+            </div>
+        </a>
+        <button class="menu-toggle" id="menu-toggle" aria-label="Mở menu">
+            <i class='bx bx-menu'></i>
+        </button>
+        <ul class="btn" id="nav-links">
+            <li><a href="about.html" class="About">Thông tin</a></li>
+            <li><a href="product.html" class="Food">Sản phẩm</a></li>           
+            <li><a href="feedback.html" class="contact">Liên hệ</a></li>
+            <li><a href="basket.html" class="Basket">Giỏ hàng</a></li>
+        </ul>
+        <div class="mobile-menu" id="mobile-menu">
+          <a href="about.html">Thông tin</a>
+          <a href="product.html">Sản phẩm</a>
+          <a href="feedback.html">Liên hệ</a>
+          <a href="basket.html">Giỏ hàng</a>
+          <a href="product-search.html">Tìm kiếm</a>
+        </div>        
+    </div>
+    <a href="login.html" class="btn-logout"><i class='bx bx-log-out'></i></a>
+    <button class="btn-acc"><i class='bx bx-user-circle'></i></button>
+    <!-- header-section -->
+    <header class="name-container" id="home">
+        <div class="slogan-div">
+            <h1 class="slogan">Hôm nay bạn ăn gì nhỉ,<br> vào <span class="slogan-logo">FoodBooking</span> đặt đồ ăn ngay thôi!!</h1>
+            <a href="product.html" class="book">🍽️ Đặt đồ ăn ngay</a>
+        </div>
+        <div class="name">FoodBooking</div>
+    </header>
+
+    <div id="accountPopup" class="popup-account">
+        <div class="popup-content">
+            <span class="close-popup" onclick="closePopup()">&times;</span>
+            <h2 class="popup-title">Thông tin tài khoản đang đăng nhập</h2>
+            <p><strong>Tên:</strong> <span id="userName">...</span></p>
+            <p><strong>Email:</strong> <span id="userEmail">...</span></p>
+            <a href="account.html" class="account">Quản lí tài khoản của bạn</a>
+        </div>
+    </div>
+
+    <!-- menu-section -->
+    <section class="menu">
+        <h1 class="menu-title">
+            <p class="well">Chào mừng đến với FoodBooking!</p>
+            <span id="displayName">...</span>
+            <p class="under-title">-------------------------</p>
+        </h1>
+        <div class="choices">
+            <div class="food-order" id="chose">
+                <a href="product.html"><i style="color: rgb(207, 137, 6);"
+                        class="fa-solid fa-burger" id="logo-menu"></i></a> <br>
+                <label class="text-spon">Đồ ăn & Đồ uống</label>
+            </div>
+
+            <div class="weather" id="chose">
+                <a href="weather.html"><i style="color: rgb(211, 181, 81);" class="fa-solid fa-sun"
+                        id="logo-menu"></i></a> <br>
+                <label class="text-spon">Thời tiết hiện tại</label>
+            </div>
+
+            <div class="voucher" id="chose" style="margin-right: -10px;">
+                <a href="voucher.html"><i style="color: rgb(0, 94, 0);" class="fa-solid fa-tags"
+                        id="logo-menu"></i></a> <br>
+                <label class="text-spon">Kho Voucher</label>
+            </div>
+            
+            <div class="info-menu" id="chose" style="margin-right: -10px;">
+                <a href="about.html"><i style="color: rgb(49, 136, 217);" class="fa-solid fa-circle-info"
+                    id="logo-menu"></i></a> <br>
+                <label class="text-spon">Về chúng tôi</label>
+            </div>
+
+            <div class="feedback-menu" id="chose" style="margin-right: -10px;">
+                <a href="feedback.html"><i style="color: burlywood;" class="fa-solid fa-comments"
+                    id="logo-menu"></i></a> <br>
+                <label class="text-spon">Góp ý</label>
+            </div>
+        </div>
+    </section>
+
+<section class="features">
+  <h2 class="section-title">Vì sao chọn FoodBooking?</h2>
+  <div class="features-grid">
+    <div class="feature-item">⏱️ Giao hàng nhanh</div>
+    <a href="product.html" class="feature-item">🍜 Đa dạng món ăn</a>
+    <a href="voucher.html" class="feature-item">🎁 Ưu đãi mỗi ngày</a>
+    <a href="product.html" class="feature-item">📱 Đặt hàng siêu dễ</a>
+  </div>
+  <p>FoodBooking luôn sẵn lòng phục vụ bạn!</p>
+</section>
+
+<section class="categories">
+  <h2 class="section-title">Danh mục món ăn phổ biến</h2>
+  <div class="category-grid">
+    <a href="product.html" class="category-item">🍛 Cơm</a>
+    <a href="product.html" class="category-item">🥤 Đồ uống</a>
+    <a href="product.html" class="category-item">🍰 Tráng miệng</a>
+  </div>
+</section>
+
+<section class="newfeature">
+  <h2 class="section-title">Tính năng mới</h2>
+  <img src="https://res.cloudinary.com/dhxabc6as/image/upload/v1754399064/e1fa6a66-c8f5-4332-aa06-601d35bde4d8.png" alt="feature" class="sale-img">
+  <h2 class="section-title">FoodBooking AI sẽ tư vấn về bữa ăn và cho bạn lời khuyên tốt nhất cho sức khỏe của bạn</h2>
+  <a href="feature.html" class="feature-btn">🎉 Thử ngay!</a>
+</section>
+
+<section class="promotions">
+  <h2 class="section-title">Ưu đãi của FoodBooking</h2>
+  <img src="https://res.cloudinary.com/dhxabc6as/image/upload/v1754397480/889e17f6-1eea-436a-b9e0-510a5a4c790a.png" alt="sale" class="sale-img">
+  <div class="voucher-text">🎉 Khám phá ngay kho voucher!</div>
+  <a href="voucher.html" class="voucher-btn">🎫 Kho voucher</a>
+</section>
+
+<section class="reviews">
+  <h2 class="section-title">Khách hàng nói gì?</h2>
+  <div class="reviews-grid">
+    <div class="review-item">
+      <p>"Đồ ăn siêu ngon, giao nhanh mà còn rẻ nữa!"</p>
+      <span>— Mai Anh 🌟🌟🌟🌟🌟</span>
+    </div>
+    <div class="review-item">
+      <p>"Mình thích nhất là phần AI gợi ý món theo thời tiết."</p>
+      <span>— Quốc Bảo 🌟🌟🌟🌟</span>
+    </div>
+    <div class="review-item">
+      <p>"Giao diện dễ dùng, món ăn phong phú, rất đáng thử!"</p>
+      <span>— Thanh Trúc 🌟🌟🌟🌟🌟</span>
+    </div>
+    <div class="review-item">
+      <p>"Món ăn luôn nóng hổi khi tới tay, rất hài lòng."</p>
+      <span>— Hữu Nghĩa 🌟🌟🌟🌟🌟</span>
+    </div>
+    <div class="review-item">
+      <p>"Tôi bất ngờ với dịch vụ khách hàng, hỗ trợ nhanh chóng."</p>
+      <span>— Kim Ngân 🌟🌟🌟🌟🌟</span>
+    </div>
+    <div class="review-item">
+      <p>"Ưu đãi mỗi ngày rất hấp dẫn, tôi đặt hàng gần như mỗi tối!"</p>
+      <span>— Anh Dũng 🌟🌟🌟🌟🌟</span>
+    </div>
+  </div>
+</section>
+
+<section class="ai-assistant">
+  <h2 class="section-title">🤖 Trợ lí AI FoodBooking</h2>
+  <p>Bạn muốn ăn gì hôm nay? Hãy chat với AI Assistant của chúng tôi!</p>
+  <div class="ai-features">
+    <div class="ai-feature">
+      <i class='bx bx-brain'></i>
+      <h3>Gợi ý thông minh</h3>
+      <p>AI sẽ gợi ý món ăn phù hợp với sở thích và thời tiết</p>
+    </div>
+    <div class="ai-feature">
+      <i class='bx bx-time'></i>
+      <h3>Tư vấn 24/7</h3>
+      <p>Luôn sẵn sàng hỗ trợ bạn mọi lúc</p>
+    </div>
+    <div class="ai-feature">
+      <i class='bx bx-conversation'></i>
+      <h3>Chat tự nhiên</h3>
+      <p>Trò chuyện như với người thật</p>
+    </div>
+  </div>
+  <button onclick="toggleChatbot()" class="chat-now-btn">
+    <i class='bx bx-bot'></i> Chat ngay với AI
+  </button>
+</section>
+
+<section class="feedback">
+  <h2 class="section-title">💬 Góp ý cho FoodBooking</h2>
+  <p>Hãy để lại lời nhắn hoặc ý tưởng cải thiện dịch vụ!</p>
+  <a href="feedback.html" class="btn-feedback">Gửi góp ý</a>
+</section>
+
+<section class="feedback-community">
+  <h2 class="section-title">📝 Phản hồi của mọi người</h2>
+  <p>Xem và tham gia thảo luận với cộng đồng của FoodBooking!</p>
+  <div class="feedback-actions">
+    <a href="recive.html" class="btn-feedback-community">
+      <i class='bx bx-message-square-dots'></i>
+      Xem tất cả phản hồi
+    </a>
+    <a href="feedback.html" class="btn-feedback-community secondary">
+      <i class='bx bx-plus-circle'></i>
+      Gửi phản hồi mới
+    </a>
+  </div>
+</section>
+
+    <!-- Thay thế footer cũ bằng include footer mới -->
+    <div id="footer-placeholder"></div>
+    <script>
+        fetch('components/footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+            });
+    </script>
+    <script type="module">
+        const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+        if (currentUser) {
+            document.getElementById("userName").textContent = currentUser.displayName || "Không rõ";
+            document.getElementById("userEmail").textContent = currentUser.email || "Không có email";
+            document.getElementById("displayName").textContent = currentUser.displayName || "Khách";
+        } else {
+            document.getElementById("displayName").textContent = "Khách";
+        }
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.js"
+        integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <script src="js/FoodBooking.js" defer></script>
+    <script src="js/jquery.waypoints.min.js"></script>
+    <script src="js/chatbot.js"></script>
+    <script>
+      document.getElementById('menu-toggle').onclick = function() {
+        document.getElementById('mobile-menu').classList.toggle('active');
+      };
+      document.addEventListener('click', function(event) {
+        const menu = document.getElementById('mobile-menu');
+        const toggle = document.getElementById('menu-toggle');
+        if (!menu.contains(event.target) && !toggle.contains(event.target)) {
+          menu.classList.remove('active');
+        }
+      });
+    </script>
+<div id="customAlert" class="custom-alert" style="display:none;">
+  <div class="custom-alert-box">
+    <span id="customAlertMsg"></span>
+    <button id="customAlertClose">Đóng</button>
+  </div>
+</div>
+</body>
+
+</html>

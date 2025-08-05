@@ -1,0 +1,618 @@
+/* CustomConfirm button style for popup */
+.custom-alert .custom-confirm-btns {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 18px;
+}
+.custom-alert .custom-confirm-btns button {
+  padding: 8px 22px;
+  border-radius: 6px;
+  border: none;
+  background: var(--accent-color, #ff6b6b);
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: var(--shadow, 0 2px 5px rgba(0,0,0,0.1));
+  transition: background 0.2s;
+}
+.custom-alert .custom-confirm-btns button:last-child {
+  background: #ccc;
+  color: #333;
+}
+.custom-alert .custom-confirm-btns button:hover {
+  filter: brightness(0.95);
+}
+/* Animation cho custom alert popup */
+.custom-alert {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s;
+}
+.custom-alert.fadeIn {
+  opacity: 1;
+  pointer-events: auto;
+  animation: fadeInAlert 0.35s;
+}
+.custom-alert.fadeOut {
+  opacity: 0;
+  pointer-events: none;
+  animation: fadeOutAlert 0.35s;
+}
+@keyframes fadeInAlert {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes fadeOutAlert {
+  from { opacity: 1; transform: scale(1); }
+  to { opacity: 0; transform: scale(0.95); }
+}
+/* start */
+html, body {
+  font-family: 'Nunito', sans-serif;
+  font-size: 20px;
+  background-color: #FAF7F0;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+.custom-alert {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+.custom-alert-box {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  padding: 32px 28px;
+  min-width: 320px;
+  max-width: 90vw;
+  text-align: center;
+  font-size: 1.15rem;
+  color: #d84315;
+  position: relative;
+}
+#customAlertClose {
+  margin-top: 18px;
+  padding: 8px 24px;
+  background: #ff7043;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+/* btn */
+.btn-logout {
+  top: 12px;
+  right: 80px;
+  background: none;
+  border: none;
+  font-size: 40px;
+  color: black;
+  transition: 150ms;
+  position: fixed;
+  z-index: 11;
+}
+
+.btn-acc {
+  background: none;
+  border: none;
+  font-size: 40px;
+  color: black;
+  transition: 150ms;
+  position: fixed;
+  right: 2px;
+  top: 14px;
+  z-index: 11;
+}
+
+.btn-acc:hover,
+.btn-logout:hover {
+  transform: scale(1.05);
+  transition: 150ms;
+}
+
+.btn-acc:active,
+.btn-logout:active {
+  transform: scale(1.1);
+  transition: 50ms;
+}
+
+.popup-account {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.popup-content {
+  background-color: white;
+  margin: 8% auto;
+  padding: 20px;
+  width: 600px;
+  border-radius: 8px;
+  text-align: left;
+  position: relative;
+  animation: slideIn 0.3s ease-in-out;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* taskbar */
+.taskbar {
+  background-color: #D8D2C2;
+  width: 100%;
+  margin: 0;
+  padding: 2px 50px 2px 0px;
+  height: 65px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 10;
+  box-shadow: 0 4px 5px -3px rgb(80, 80, 80);
+}
+
+.logo {
+  margin: 6px auto auto 20px;
+  width: 220px;
+  transition: 150ms;
+  border-radius: 10px;
+}
+
+.search-container {
+  position: relative;
+  width: 750px;
+  margin-left: 100px;
+}
+
+.find {
+  padding: 10px 20px;
+  font-size: 20px;
+  border-radius: 12px;
+  border: none;
+  width: 100%;
+  padding-right: 60px;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.search-icon {
+  position: absolute;
+  right: 25px;
+  top: 50%;
+  color: black;
+  transform: translateY(-50%);
+  pointer-events: none;
+  font-size: 20px;
+}
+
+.btn {
+  list-style: none;
+  display: flex;
+  margin-right: 50px;
+  padding-right: 75px;
+  font-size: 22px;
+}
+
+.btn li {
+  margin-right: 22px;
+  transition: 150ms;
+}
+
+.btn li a {
+  text-decoration: none;
+  color: black;
+  transition: 1s;
+  border-radius: 10px;
+  padding: 10px 15px;
+  margin-left: 15px;
+}
+
+.btn li a:hover {
+  transition: 1s;
+  border-radius: 10px;
+}
+
+.btn li:hover {
+  transform: scale(1.1);
+  transition: 150ms;
+}
+
+.btn li:active {
+  transform: scale(1.25);
+  transition: 50ms;
+}
+
+.deal-title {
+  position: relative;
+  top: 100px;
+  left: 150px;
+}
+
+.total {
+  position: relative;
+  top: 80px;
+  left: 150px;
+  font-size: 22px;
+}
+
+.block {
+  margin: -25px 0 0 -100px;
+}
+
+.cart,
+.block {
+  margin-bottom: 120px;
+}
+
+.pay-img {
+  width: 500px;
+  position: relative;
+  left: 200px;
+  border-radius: 15px;
+  border: none;
+}
+
+.cart {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  max-width: 1200px;
+  margin: -1260px 100px 100px 0;
+  padding: 0 20px;
+  box-sizing: border-box;
+  float: right;
+}
+
+.product-demo {
+  background-color: #e2dfcf;
+  border-radius: 20px;
+  padding: 20px;
+  margin: 0 0 20px 100px;
+  font-size: 20px;
+  text-align: center;
+  z-index: 0;
+  width: 275px;
+}
+
+.product-img {
+  width: 275px;
+  border-radius: 15px;
+}
+
+.product-demo.visible {
+  display: block;
+}
+
+.product {
+  position: relative;
+  top: 75px;
+  left: 175px;
+}
+
+.plus,
+.minus,
+.remove,
+.checkout {
+  padding: 15px;
+  font-size: 20px;
+  border-radius: 15px;
+  border: none;
+  transition: 0.3s;
+  position: relative;
+}
+
+.plus,
+.minus {
+  background-color: gold;  
+}
+
+.plus { right: -110px; top: -65px; }
+.minus { right: 45px; top: -65px; }
+
+.remove {
+  background: none;
+  right: -95px;
+  top: -160px;
+}
+
+.plus:hover,
+.minus:hover,
+.remove:hover,
+.checkout:hover {
+  scale: 1.1;
+}
+
+.plus:active,
+.minus:active,
+.remove:active,
+.checkout:active {
+  scale: 1.125;
+}
+
+.checkout {
+  background-color: gold;
+  top: 60px;
+  left: -300px;
+  margin-bottom: 150px;
+}
+
+.code {
+  font-size : 28px;
+}
+
+.total-food {
+  margin: -50px 5px 0 0;
+}
+
+.voucher {
+  margin: 150px 0 0 150px;
+  font-size: 20px;
+}
+
+.enterPriceCode {
+  margin-top: -55px;
+}
+
+.enterDeliveryCode {
+  margin: -15px 0 -80px 0;
+}
+
+.codeInput {
+  padding: 8px;
+  font-size: 20px;
+  border-radius: 12px;
+  padding-right: 60px;
+  outline: none;
+  width: 100px;
+}
+
+.popup-account {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.popup-content {
+  background-color: white;
+  margin: 15% auto;
+  padding: 20px;
+  width: 600px;
+  border-radius: 8px;
+  text-align: left;
+  position: relative;
+}
+
+.close-popup {
+  position: absolute;
+  right: 15px;
+  top: 5px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.menu-toggle,
+.search-btn {
+  display: none;
+  background: none;
+  border: none;
+  color: black;
+  font-size: 40px;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+.mobile-menu {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 65px;
+  right: 80px;
+  background: #fff;
+  width: 240px;
+  border-radius: 15px;
+  z-index: 999;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  pointer-events: none;
+  transition: max-height 0.4s ease, opacity 0.3s ease;
+}
+
+.mobile-menu.active {
+  max-height: 500px;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.mobile-menu a {
+  padding: 14px 20px;
+  text-decoration: none;
+  color: #333;
+  font-size: 18px;
+  border-radius: 8px;
+  transition: background 0.3s ease, padding-left 0.3s ease;
+}
+
+.mobile-menu a:hover {
+  background-color: #f0f0f0;
+  padding-left: 25px;
+  color: #e68a00;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  /* Ẩn tìm kiếm + menu desktop */
+  .search-container,
+  .btn {
+    display: none;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .mobile-menu {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 65px;
+    right: 10px;
+    background: #fff;
+    width: 200px;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+  }
+
+  .mobile-menu.active {
+    display: flex;
+  }
+
+  .mobile-menu a {
+    padding: 12px 16px;
+    border-bottom: 1px solid #eee;
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+  }
+
+  .btn-logout,
+  .btn-acc {
+    font-size: 26px;
+    top: 10px;
+  }
+
+  .btn-logout {
+    right: 50px;
+  }
+
+  .btn-acc {
+    right: 10px;
+  }
+
+  .block {
+    order: 1;
+    margin-top: 80px;
+    padding: 15px 20px;
+    background: #fff8ed;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    text-align: center;
+  }
+
+  .total-food,
+  .voucher,
+  .enterPriceCode,
+  .enterDeliveryCode,
+  .checkout {
+    font-size: 15px;
+    margin-top: 8px;
+  }
+
+  .codeInput {
+    width: 100%;
+    font-size: 14px;
+    padding: 6px;
+  }
+
+  .checkout {
+    background-color: #ffd700;
+    padding: 12px 18px;
+    border-radius: 10px;
+    margin: 10px auto;
+    display: block;
+  }
+
+  .cart {
+    order: 2;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    padding: 10px 12px;
+    margin-bottom: 100px;
+  }
+
+  .product-demo {
+    background-color: #e2dfcf;
+    border-radius: 12px;
+    padding: 10px;
+    font-size: 13px;
+    text-align: center;
+  }
+
+  .product-img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+  }
+
+  .plus,
+  .minus,
+  .remove {
+    font-size: 12px;
+    padding: 6px 8px;
+    margin: 4px;
+  }
+
+  .popup-account .popup-content {
+    width: 90%;
+    padding: 16px;
+  }
+
+  .footer-container {
+    grid-template-columns: 1fr;
+    text-align: center;
+    font-size: 14px;
+  }
+
+  .footer-section h3 {
+    font-size: 1.1rem;
+  }
+
+  .footer-section p,
+  .footer-links a {
+    font-size: 13px;
+  }
+}
