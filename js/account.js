@@ -5,6 +5,12 @@ import {
   updatePassword,
   signInWithEmailAndPassword,
 } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+import {
+  getDatabase,
+  ref,
+  remove,
+  get
+} from "https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js";
 import { auth } from "./firebase.js";
 
 // Custom alert
@@ -163,18 +169,67 @@ document.getElementById("accountForm").addEventListener("submit", async (e) => {
 });
 
 // Xóa tài khoản
-document.getElementById("btnDelete").addEventListener("click", () => {
+document.getElementById("btnDelete").addEventListener("click", async () => {
   const user = auth.currentUser;
   if (!user) return;
-  if (confirm("Bạn có chắc muốn xóa tài khoản không?")) {
-    deleteUser(user)
-      .then(() => {
-        localStorage.removeItem("currentUser");
-        customAlert("Tài khoản đã bị xóa.", () => window.location.href = "register.html");
-      })
-      .catch((error) => {
-        customAlert("Lỗi xóa tài khoản: " + error.message);
-      });
+
+  if (!confirm("Bạn có chắc muốn xóa tài khoản không?")) return;
+
+  const uid = user.uid;
+  const db = getDatabase();
+
+  try {
+    const deletedProductIds = [];
+    const productsSnap = await get(ref(db, 'products'));
+    if (productsSnap.exists()) {
+      const products = productsSnap.val();
+      for (const productId in products) {
+        if (products[productId].userId === uid) {
+          await remove(ref(db, `products/${productId}`));
+          deletedProductIds.push(productId);
+        }
+      }
+    }
+
+    if (deletedProductIds.length > 0) {
+      const usersSnap = await get(ref(db, 'users'));
+      if (usersSnap.exists()) {
+        const users = usersSnap.val();
+        for (const otherUid in users) {
+          if (otherUid === uid) continue;
+          const cart = users[otherUid].cart || {};
+          for (const productId of deletedProductIds) {
+            if (cart[productId]) {
+              await remove(ref(db, `users/${otherUid}/cart/${productId}`));
+            }
+          }
+        }
+      }
+    }
+    const commentsSnap = await get(ref(db, 'comments'));
+    if (commentsSnap.exists()) {
+      const comments = commentsSnap.val();
+      for (const productId in comments) {
+        const productComments = comments[productId];
+        for (const commentId in productComments) {
+          if (productComments[commentId].userId === uid) {
+            await remove(ref(db, `comments/${productId}/${commentId}`));
+          }
+        }
+      }
+    }
+
+    await remove(ref(db, `users/${uid}`));
+
+    await deleteUser(user);
+
+    localStorage.removeItem("currentUser");
+    customAlert("Tài khoản và toàn bộ dữ liệu đã bị xóa.", () => {
+      window.location.href = "login.html";
+    });
+
+  } catch (error) {
+    customAlert("Lỗi khi xóa tài khoản hoặc dữ liệu: " + error.message);
   }
 });
 
