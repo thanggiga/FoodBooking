@@ -204,27 +204,6 @@ async function getIPAddress() {
     }
 }
 
-// Popup tài khoản
-function info() {
-    const popup = document.getElementById("accountPopup");
-    const nameEl = document.getElementById("userName");
-    const emailEl = document.getElementById("userEmail");
-
-    const user = getCurrentUser();
-    if (user) {
-        nameEl.textContent = user.displayName || "Ẩn danh";
-        emailEl.textContent = user.email || "Không có email";
-    } else {
-        nameEl.textContent = "Chưa đăng nhập";
-        emailEl.textContent = "";
-    }
-    popup.style.display = "block";
-}
-
-function closePopup() {
-    document.getElementById("accountPopup").style.display = "none";
-}
-
 // Logout
 document.querySelector('.btn-logout').addEventListener('click', function() {
     auth.signOut();
