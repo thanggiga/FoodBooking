@@ -25,7 +25,28 @@
   </div>
 
   <a href="login.html" class="btn-logout"><i class='bx bx-log-out'></i></a>
-  <button onclick="info()" class="btn-acc"><i class='bx bx-user-circle'></i></button>
+  <button id="btnAcc" class="btn-acc"><i class='bx bx-user-circle'></i></button>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const btnAcc = document.getElementById('btnAcc');
+      const accountPopup = document.getElementById('accountPopup');
+      if (btnAcc && accountPopup) {
+        btnAcc.onclick = function() {
+          window.info();
+          accountPopup.classList.add('active');
+        };
+        accountPopup.addEventListener('mousedown', function(e) {
+          if (e.target === accountPopup) {
+            closePopup();
+          }
+        });
+      }
+    });
+    window.closePopup = function() {
+      const accountPopup = document.getElementById('accountPopup');
+      if (accountPopup) accountPopup.classList.remove('active');
+    };
+  </script>
 
   <div class="taskbar">
     <a href="index.html"><img src="https://res.cloudinary.com/dhxabc6as/image/upload/v1750578758/BetterImage_1750578615095_hpjyos.jpg" alt="logo" class="logo" /></a>

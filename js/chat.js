@@ -1,4 +1,4 @@
-import { database as db, auth, ref, set, get, onValue, push, update } from './firebase.js';
+import { db, auth, ref, set, get, onValue, push, update } from './firebase.js';
 
 let currentUser = null;
 let currentChatId = null;
@@ -31,18 +31,50 @@ auth.onAuthStateChanged(user => {
         window.location.href = 'login.html';
     }
 });
+document.addEventListener("DOMContentLoaded", () => {
+    const btnAcc = document.getElementById("btnAcc");
+    if (btnAcc) {
+        btnAcc.addEventListener("click", info);
+    }
+});
+
+function info() {
+    const popup = document.getElementById("accountPopup");
+    const nameEl = document.getElementById("userName");
+    const emailEl = document.getElementById("userEmail");
+    const user = getCurrentUser();
+    if (user) {
+        nameEl.textContent = user.displayName || "Ẩn danh";
+        emailEl.textContent = user.email || "Không có email";
+    } else {
+        nameEl.textContent = "Chưa đăng nhập";
+        emailEl.textContent = "";
+    }
+    popup.style.display = "block";
+}
+
+function closePopup() {
+    document.getElementById("accountPopup").style.display = "none";
+}
 
 function handleOpenChatFromProduct() {
     const chatInfo = JSON.parse(localStorage.getItem('currentChat'));
     if (chatInfo && chatInfo.chatId && currentUser) {
         const chatRef = ref(db, 'chats/' + chatInfo.chatId);
+        // Đảm bảo sellerName lấy đúng displayName của sellerId nếu sellerId là người bán đang đăng nhập
+        let sellerName = chatInfo.sellerName;
+        // Nếu người bán hiện tại là người đăng nhập, lấy displayName từ Firebase Auth
+        if (currentUser.uid === chatInfo.sellerId && currentUser.displayName) {
+            sellerName = currentUser.displayName;
+        }
+        // Nếu không phải, giữ nguyên sellerName từ chatInfo (được truyền từ product.js)
         get(chatRef).then(snap => {
             if (!snap.exists()) {
                 set(chatRef, {
                     id: chatInfo.chatId,
                     members: [chatInfo.userId, chatInfo.sellerId],
                     sellerId: chatInfo.sellerId,
-                    sellerName: chatInfo.sellerName,
+                    sellerName: sellerName,
                     sellerEmail: chatInfo.sellerEmail,
                     buyerId: chatInfo.userId,
                     buyerName: chatInfo.userName,
@@ -190,14 +222,15 @@ function getChatDisplayName(chat) {
     }
 }
 
-window.filterChats = function(type) {
+function filterChats(type) {
     chatFilter = type;
     document.querySelectorAll('.chat-tab').forEach(btn => btn.classList.remove('active'));
     if (type === 'all') document.querySelector('.chat-tab').classList.add('active');
     else if (type === 'unread') document.querySelectorAll('.chat-tab')[1].classList.add('active');
     else document.querySelectorAll('.chat-tab')[2].classList.add('active');
     renderChatList();
-};
+}
+window.filterChats = filterChats;
 
 document.getElementById('chatSearchInput').oninput = renderChatList;
 
@@ -300,10 +333,32 @@ function renderMessages(messages, chat) {
 // --- Render header chat room ---
 function renderChatHeader(chat) {
     const el = document.getElementById('chatRoomHeader');
+    const currentUid = getCurrentUser().uid;
+    let otherName = '';
+    if (currentUid === chat.sellerId) {
+        otherName = chat.buyerName || 'Người mua';
+    } else if (currentUid === chat.buyerId) {
+        // Nếu là người mua, cố gắng lấy displayName của người bán
+        let sellerName = chat.sellerName || 'Người bán';
+        // Nếu sellerId trùng với currentUser thì lấy displayName từ currentUser
+        if (getCurrentUser() && getCurrentUser().uid === chat.sellerId && getCurrentUser().displayName) {
+            sellerName = getCurrentUser().displayName;
+        } else {
+            // Nếu có danh sách người dùng từng đăng nhập, thử lấy displayName từ đó
+            const usersList = JSON.parse(localStorage.getItem("usersList") || "[]");
+            const sellerUser = usersList.find(u => u.uid === chat.sellerId);
+            if (sellerUser && sellerUser.displayName) {
+                sellerName = sellerUser.displayName;
+            }
+        }
+        otherName = sellerName;
+    } else {
+        otherName = chat.sellerName || chat.buyerName || 'Ẩn danh';
+    }
     el.innerHTML = `
         <div class="room-avatar"><i class='fa-solid fa-circle-user' style='font-size: 40px; color: #222;'></i></div>
         <div class="room-info">
-            <div class="room-title">${getChatDisplayName(chat)}</div>
+            <div class="room-title">${otherName}</div>
             <div class="room-product">${chat.productName ? `<i class='bx bx-purchase-tag'></i> ${chat.productName}` : ''}</div>
         </div>
         <button class="room-more" onclick="showRoomMenu()"><i class='bx bx-dots-vertical-rounded'></i></button>

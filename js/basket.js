@@ -221,7 +221,15 @@ function updateQuantity(key, change) {
   onValue(quantityRef, (snapshot) => {
     let quantity = snapshot.val() + change;
     if (quantity < 1) {
-      removeItem(key);
+      // Khi giảm về 0, xác nhận xóa
+      customConfirm("Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?",
+        function() { // onConfirm
+          remove(ref(db, `users/${user.uid}/cart/${key}`))
+            .then(() => customAlert("Đã xóa sản phẩm!"))
+            .catch(() => customAlert("Xóa thất bại!"));
+        },
+        function() {} // onCancel
+      );
     } else {
       update(ref(db, `users/${user.uid}/cart/${key}`), { quantity });
     }
@@ -232,19 +240,22 @@ function removeItem(key, event) {
   const user = getCurrentUser();
   if (!user) return;
 
-  if (customConfirm("Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?")) {
-    const btn = event.target.closest('.remove');
-    const original = btn.innerHTML;
-    btn.disabled = true;
-    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-    remove(ref(db, `users/${user.uid}/cart/${key}`))
-      .then(() => customAlert("Đã xóa sản phẩm!"))
-      .catch(() => {
-        btn.disabled = false;
-        btn.innerHTML = original;
-        customAlert("Xóa thất bại!");
-      });
-  }
+  customConfirm("Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?",
+    function() { // onConfirm
+      const btn = event.target.closest('.remove');
+      const original = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+      remove(ref(db, `users/${user.uid}/cart/${key}`))
+        .then(() => customAlert("Đã xóa sản phẩm!"))
+        .catch(() => {
+          btn.disabled = false;
+          btn.innerHTML = original;
+          customAlert("Xóa thất bại!");
+        });
+    },
+    function() {} // onCancel
+  );
 }
 
 function checkout() {

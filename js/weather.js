@@ -31,6 +31,31 @@ async function getWeather() {
         customAlert(error.message);
     }
 }
+    document.addEventListener("DOMContentLoaded", () => {
+        const btnAcc = document.getElementById("btnAcc");
+        if (btnAcc) {
+            btnAcc.addEventListener("click", info);
+        }
+    });
+
+    function info() {
+        const popup = document.getElementById("accountPopup");
+        const nameEl = document.getElementById("userName");
+        const emailEl = document.getElementById("userEmail");
+        const user = JSON.parse(localStorage.getItem("currentUser"));
+        if (user) {
+            nameEl.textContent = user.displayName || "Ẩn danh";
+            emailEl.textContent = user.email || "Không có email";
+        } else {
+            nameEl.textContent = "Chưa đăng nhập";
+            emailEl.textContent = "";
+        }
+        popup.style.display = "block";
+    }
+
+    function closePopup() {
+        document.getElementById("accountPopup").style.display = "none";
+    }
 
 function displayCurrentWeather(data) {
     const { name, main, weather, wind, visibility } = data;

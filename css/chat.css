@@ -87,7 +87,7 @@ body {
     color: black;
     transition: 150ms;
     position: fixed;
-    right: 2px;
+    right: 20px;
     top: 14px;
     z-index: 11;
 }

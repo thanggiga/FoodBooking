@@ -168,12 +168,17 @@ function closePopup() {
 document.addEventListener("DOMContentLoaded", () => {
     checkAdmin();
     loadPendingProducts();
+    const btnAcc = document.getElementById("btnAcc");
+    if (btnAcc) {
+        btnAcc.addEventListener("click", info);
+    }
 });
 
 // Gắn hàm vào window để gọi từ HTML
 window.approveProduct = approveProduct;
 window.rejectProduct = rejectProduct;
 window.info = info;
+window.closePopup = closePopup;
 window.closePopup = closePopup;
 
 function customAlert(message, callback) {

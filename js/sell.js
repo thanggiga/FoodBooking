@@ -207,8 +207,9 @@ document.getElementById("sellForm").addEventListener("submit", async (e) => {
   try {
     await set(ref(db, `pendingProducts/${id}`), productData);
     localStorage.removeItem("ai_nutrition");
-    customAlert("🎉 Món ăn đã được gửi để chờ duyệt!");
-    location.reload();
+    customAlert("🎉 Món ăn đã được gửi để chờ duyệt!", function() {
+      window.location.href = "myproducts.html";
+    });
   } catch (err) {
     console.error("❌ Firebase lỗi:", err);
     customAlert("⚠️ Có lỗi khi gửi sản phẩm.");

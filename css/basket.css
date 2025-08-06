@@ -616,3 +616,7 @@ html, body {
     font-size: 13px;
   }
 }
+
+footer {
+  margin-top: 500px;
+}

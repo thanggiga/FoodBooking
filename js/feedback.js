@@ -38,12 +38,40 @@ document.getElementById('feedbackContent').addEventListener('input', function() 
     // Thay đổi màu sắc dựa trên độ dài
     counter.className = 'char-counter';
     if (currentLength > maxLength * 0.8) {
+    if (currentLength > maxLength * 0.8) {
         counter.classList.add('warning');
     }
     if (currentLength > maxLength * 0.95) {
         counter.classList.add('danger');
     }
+    }
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+    const btnAcc = document.getElementById("btnAcc");
+    if (btnAcc) {
+        btnAcc.addEventListener("click", info);
+    }
+});
+
+function info() {
+    const popup = document.getElementById("accountPopup");
+    const nameEl = document.getElementById("userName");
+    const emailEl = document.getElementById("userEmail");
+    const user = getCurrentUser();
+    if (user) {
+        nameEl.textContent = user.displayName || "Ẩn danh";
+        emailEl.textContent = user.email || "Không có email";
+    } else {
+        nameEl.textContent = "Chưa đăng nhập";
+        emailEl.textContent = "";
+    }
+    popup.style.display = "block";
+}
+
+function closePopup() {
+    document.getElementById("accountPopup").style.display = "none";
+}
 
 // Hiển thị message
 function showMessage(type, text) {

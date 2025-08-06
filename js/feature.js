@@ -286,6 +286,7 @@ window.askPreferenceAdvice = async function () {
       return;
     }
 
+
     const data = await res.json();
     console.log("AI raw response:", data);
     const content = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
@@ -298,7 +299,37 @@ window.askPreferenceAdvice = async function () {
       .replace(/\*\*(.+?)\*\*/g, '<b>$1</b>') 
       .replace(/\n{2,}/g, '</p><p>') 
       .replace(/\n/g, '<br>'); 
-    result.innerHTML = `<div class="ai-advice-formatted"><b>AI tư vấn:</b> ${formatted}</div>`;
+    result.innerHTML = `<div class="ai-advice-formatted"><b>FoodBooking AI tư vấn:</b> ${formatted}</div>
+      <button id="btnAddAllToCart" class="add-all-btn">Thêm tất cả món vào giỏ hàng</button>`;
+    const btnAddAll = document.getElementById("btnAddAllToCart");
+    if (btnAddAll) {
+      btnAddAll.onclick = async function() {
+        const user = getCurrentUser();
+        if (!user || !user.uid) {
+          customAlert("Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng!");
+          return;
+        }
+        let addCount = 0;
+        for (const product of selectedProducts) {
+          const cartRef = ref(db, `users/${user.uid}/cart/${product.id}`);
+          await new Promise((resolve) => {
+            onValue(cartRef, (snapshot) => {
+              const existing = snapshot.val();
+              const newItem = {
+                name: product.name,
+                price: product.price,
+                imageUrl: product.imageUrl,
+                quantity: existing?.quantity ? existing.quantity + (product.qty || 1) : (product.qty || 1)
+              };
+              update(cartRef, newItem)
+                .then(() => { addCount++; resolve(); })
+                .catch(() => resolve());
+            }, { onlyOnce: true });
+          });
+        }
+        customAlert(`Đã thêm ${addCount} món vào giỏ hàng!`);
+      };
+    }
   } catch (err) {
     console.error("Lỗi khi gọi API AI:", err);
     result.innerHTML = `<p style='color:red;'>❌ Đã xảy ra lỗi khi hỏi AI: ${err?.message || err}</p>`;

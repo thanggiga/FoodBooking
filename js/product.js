@@ -246,27 +246,40 @@ function addToBasket() {
   addButton.disabled = true;
   addButton.textContent = 'Đang thêm...';
 
-  const cartRef = ref(db, `users/${user.uid}/cart/${product.id}`);
-  onValue(cartRef, (snapshot) => {
-    const existing = snapshot.val();
-    const newItem = {
-      name: product.name,
-      price: product.price,
-      imageUrl: product.imageUrl,
-      quantity: existing?.quantity ? existing.quantity + 1 : 1
-    };
-    update(cartRef, newItem)
-      .then(() => {
-        customAlert("Đã thêm sản phẩm vào giỏ hàng!");
-      })
-      .catch(error => {
-        console.error("Lỗi khi thêm vào giỏ hàng:", error);
-        customAlert("Có lỗi xảy ra khi thêm sản phẩm vào giỏ hàng!");
-      })
-      .finally(() => {
-        addButton.disabled = false;
-        addButton.textContent = originalText;
-      });
+  // Kiểm tra tổng số sản phẩm trong giỏ
+  const cartAllRef = ref(db, `users/${user.uid}/cart`);
+  onValue(cartAllRef, (cartSnap) => {
+    const cartData = cartSnap.val() || {};
+    const totalItems = Object.keys(cartData).length;
+    if (!cartData[product.id] && totalItems >= 6) {
+      customAlert("Thêm sản phẩm vào giỏ hàng thất bại! Bạn chỉ có thể thêm tối đa 6 sản phẩm vào giỏ để thanh toán!");
+      addButton.disabled = false;
+      addButton.textContent = originalText;
+      return;
+    }
+    // Nếu chưa đủ 6 hoặc đang tăng số lượng sản phẩm đã có
+    const cartRef = ref(db, `users/${user.uid}/cart/${product.id}`);
+    onValue(cartRef, (snapshot) => {
+      const existing = snapshot.val();
+      const newItem = {
+        name: product.name,
+        price: product.price,
+        imageUrl: product.imageUrl,
+        quantity: existing?.quantity ? existing.quantity + 1 : 1
+      };
+      update(cartRef, newItem)
+        .then(() => {
+          customAlert("Đã thêm sản phẩm vào giỏ hàng!");
+        })
+        .catch(error => {
+          console.error("Lỗi khi thêm vào giỏ hàng:", error);
+          customAlert("Có lỗi xảy ra khi thêm sản phẩm vào giỏ hàng!");
+        })
+        .finally(() => {
+          addButton.disabled = false;
+          addButton.textContent = originalText;
+        });
+    }, { onlyOnce: true });
   }, { onlyOnce: true });
 }
 
@@ -501,8 +514,22 @@ function chatWithSeller() {
   }
 
   const sellerId = product.ownerID;
-  const sellerName = product.sellerName || "Người bán";
-  const sellerEmail = product.sellerEmail || "";
+  // Ưu tiên lấy tên người bán từ ownerName (đã lưu khi đăng bán), nếu không có thì fallback như cũ
+  let sellerName = product.ownerName || product.sellerName || "Người bán";
+  let sellerEmail = product.ownerEmail || product.sellerEmail || "";
+  // Nếu ownerID trùng với currentUser thì lấy displayName từ currentUser
+  if (getCurrentUser() && getCurrentUser().uid === sellerId && getCurrentUser().displayName) {
+    sellerName = getCurrentUser().displayName;
+    sellerEmail = getCurrentUser().email;
+  } else {
+    // Nếu có danh sách người dùng từng đăng nhập, thử lấy displayName từ đó
+    const usersList = JSON.parse(localStorage.getItem("usersList") || "[]");
+    const sellerUser = usersList.find(u => u.uid === sellerId);
+    if (sellerUser && sellerUser.displayName) {
+      sellerName = sellerUser.displayName;
+      sellerEmail = sellerUser.email || sellerEmail;
+    }
+  }
   if (!sellerId || !sellerName) {
     customAlert("Sản phẩm này chưa có đủ thông tin người bán để chat!");
     return;
