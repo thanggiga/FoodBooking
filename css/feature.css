@@ -1,3 +1,24 @@
+/* Nút thêm tất cả món vào giỏ hàng */
+.add-all-btn {
+  display: inline-block;
+  margin: 18px 0 8px 0;
+  padding: 12px 32px;
+  background: linear-gradient(90deg, #fcb69f 0%, #ffecd2 100%);
+  color: #222;
+  font-size: 1.15rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 32px;
+  box-shadow: 0 2px 12px rgba(252,182,159,0.15);
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+}
+.add-all-btn:hover {
+  background: linear-gradient(90deg, #ffecd2 0%, #fcb69f 100%);
+  color: #d35400;
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 4px 18px rgba(252,182,159,0.25);
+}
 html {
   font-family: nunito;
   font-size: 20px;
