@@ -413,8 +413,8 @@ text-decoration: none;
 
 .voucher-btn {
   display: inline-block;
-  background: linear-gradient(90deg, #078292 0%, #60fcf4 100%);
-  color: #fff;
+  background: linear-gradient(90deg, #dbd02d 0%, #daa81e 100%);
+  color: #000000;
   font-weight: 600;
   font-size: 1.1rem;
   padding: 12px 32px;
@@ -427,14 +427,14 @@ text-decoration: none;
 }
 
 .voucher-btn:hover {
-  background: linear-gradient(90deg, #60fcf4 0%, #078292 100%);
+  background: linear-gradient(90deg, #da9f22 0%, #ffdd81 100%);
   transform: translateY(-2px) scale(1.04);
   box-shadow: 0 4px 16px rgba(7,130,146,0.15);
   transition: 150ms;
 }
 
 .voucher-btn:active {
-  background: linear-gradient(90deg, #60fcf4 0%, #078292 100%);
+  background: linear-gradient(90deg, #cca53b 0%, #e7c976 100%);
   transform: scale(0.98);
   box-shadow: 0 2px 8px rgba(7,130,146,0.10);
   transition: 150ms;
@@ -509,10 +509,11 @@ margin: 0 auto;
 background-color: white;
 padding: 1.5rem;
 border-radius: 12px;
-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+box-shadow: 0 4px 12px rgba(0, 0, 0, 0.486);
 text-align: left;
 transition: transform 0.3s ease;
 position: relative;
+border: 2px solid rgb(255, 186, 57);
 }
 
 .review-item:hover {
@@ -534,7 +535,7 @@ font-size: 0.95rem;
 
 /* === AI ASSISTANT === */
 .ai-assistant {
-background-color: #fffdf7;
+background: linear-gradient(90deg, #60fcf4 0%, #078292 100%);
 padding: 3rem 2rem;
 text-align: center;
 }
@@ -952,8 +953,9 @@ transition: 50ms;
   padding: 25px;
   border-radius: 15px;
   text-align: center;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.623);
   transition: transform 0.3s ease;
+  border: 2px solid gray;
 }
 
 .ai-feature:hover {
@@ -979,8 +981,8 @@ transition: 50ms;
 }
 
 .chat-now-btn {
-  background: linear-gradient(135deg, #dbbf97, #fcb69f);
-  color: white;
+  background: linear-gradient(135deg, #af9878, #d88f77);
+  color: rgb(255, 255, 255);
   border: none;
   padding: 15px 30px;
   border-radius: 25px;
