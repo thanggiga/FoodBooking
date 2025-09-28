@@ -261,8 +261,8 @@ window.askPreferenceAdvice = async function () {
   const selectedNames = selectedProducts.map(p => p.name).join(", ");
   const prompt = `Tôi ${age} tuổi, mục tiêu: ${goal}. ${note ? "Ghi chú: " + note : ""} Tôi đã chọn các món: ${selectedNames}. Bạn nhận xét giúp tôi về lựa chọn này và tư vấn thêm nếu cần.`;
 
-  const apiKey = "AIzaSyCbGjhla6AP_2_wyfKQhsbjmL43Ud8OmX0";
-  const model = "gemini-1.5-flash-latest";
+  const apiKey = "AIzaSyAg5XdsCM_EkGpJETDggzs5DLRg5K4_1cQ";
+  const model = "gemini-2.5-flash";
   const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
 
   const loading = document.getElementById("aiLoading");
