@@ -60,6 +60,18 @@ function createProductCard(productId, product) {
         ? new Date(product.createdAt).toLocaleDateString('vi-VN')
         : "Không rõ";
 
+    // Hiển thị giấy phép kinh doanh và giấy chứng nhận an toàn thực phẩm
+    function renderFileBlock(fileObj, label) {
+        if (!fileObj || !fileObj.data) return '';
+        if (fileObj.type.startsWith('image/')) {
+            return `<div class="cert-block"><div class="cert-label">${label}:</div><img class="cert-img" src="${fileObj.data}" alt="${label}" /></div>`;
+        } else if (fileObj.type === 'application/pdf') {
+            return `<div class="cert-block"><div class="cert-label">${label}:</div><a class="cert-link" href="${fileObj.data}" target="_blank">Xem/Tải PDF</a></div>`;
+        } else {
+            return `<div class="cert-block"><div class="cert-label">${label}:</div><a class="cert-link" href="${fileObj.data}" download>Download file</a></div>`;
+        }
+    }
+
     card.innerHTML = `
         <img src="${product.imageUrl}" alt="${product.name}">
         <div class="product-info">
@@ -70,6 +82,10 @@ function createProductCard(productId, product) {
                 <p><strong>Người gửi:</strong> ${product.submittedName || product.ownerName || "Ẩn danh"}</p>
                 <p><strong>Email:</strong> ${product.submittedEmail || product.ownerEmail || "Không có"}</p>
                 <p><strong>Ngày gửi:</strong> ${submittedDate}</p>
+            </div>
+            <div class="certs-view">
+                ${renderFileBlock(product.businessLicense, 'Giấy phép kinh doanh')}
+                ${renderFileBlock(product.foodSafetyCert, 'Giấy chứng nhận ATTP')}
             </div>
             <div class="action-buttons">
                 <button class="approve-btn" onclick="approveProduct('${productId}')">Duyệt</button>

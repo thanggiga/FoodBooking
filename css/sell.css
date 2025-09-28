@@ -228,6 +228,32 @@ body {
     resize: vertical;
 }
 
+.sell-form input[type="file"] {
+    display: block;
+    margin-top: 8px;
+    margin-bottom: 12px;
+    padding: 8px 0;
+    font-size: 1rem;
+    border: none;
+    background: none;
+    color: #333;
+}
+
+.sell-form input[type="file"]::-webkit-file-upload-button {
+    background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 18px;
+    font-size: 1rem;
+    font-family: 'Nunito', sans-serif;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+.sell-form input[type="file"]:hover::-webkit-file-upload-button {
+    background: linear-gradient(135deg, #ff5252, #ff7676);
+}
+
 .sell-form button {
     margin-top: 25px;
     background: linear-gradient(135deg, #ff6b6b, #ff8e8e);

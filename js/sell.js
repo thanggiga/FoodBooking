@@ -110,8 +110,8 @@ document.getElementById("analyzeBtn").addEventListener("click", async () => {
 
   const inputText = names.map((n, i) => `${weights[i]} ${n}`).join(", ");
 
-  const apiKey = "AIzaSyCbGjhla6AP_2_wyfKQhsbjmL43Ud8OmX0";
-  const model = "gemini-1.5-flash-latest";
+  const apiKey = "AIzaSyAg5XdsCM_EkGpJETDggzs5DLRg5K4_1cQ";
+  const model = "gemini-2.5-flash";
   const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
 
   const prompt = `
@@ -175,8 +175,34 @@ document.getElementById("sellForm").addEventListener("submit", async (e) => {
   const weights = Array.from(document.querySelectorAll(".aiWeight")).map(i => i.value.trim());
   const nutrition = JSON.parse(localStorage.getItem("ai_nutrition") || "{}");
 
-  if (!name || !imageUrl || isNaN(price) || !description || !category || names.length === 0 || Object.keys(nutrition).length === 0) {
-    customAlert("⚠️ Vui lòng nhập đầy đủ thông tin và phân tích dinh dưỡng trước.");
+  // Lấy file giấy tờ
+  const foodSafetyCert = document.getElementById("foodSafetyCert")?.files?.[0];
+  const businessLicense = document.getElementById("businessLicense")?.files?.[0];
+
+  if (!name || !imageUrl || isNaN(price) || !description || !category || names.length === 0 || Object.keys(nutrition).length === 0 || !foodSafetyCert || !businessLicense) {
+    customAlert("⚠️ Vui lòng nhập đầy đủ thông tin, tải lên giấy tờ và phân tích dinh dưỡng trước.");
+    return;
+  }
+
+  // Đọc file thành base64
+  function fileToBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  let foodSafetyCertBase64 = "", businessLicenseBase64 = "";
+  try {
+    [foodSafetyCertBase64, businessLicenseBase64] = await Promise.all([
+      fileToBase64(foodSafetyCert),
+      fileToBase64(businessLicense)
+    ]);
+  } catch (err) {
+    console.error("❌ Lỗi đọc file giấy tờ:", err);
+    customAlert("⚠️ Có lỗi khi đọc file giấy tờ. Vui lòng thử lại.");
     return;
   }
 
@@ -201,7 +227,17 @@ document.getElementById("sellForm").addEventListener("submit", async (e) => {
     createdAt,
     ownerID: user.uid,
     ownerName: user.displayName || "Ẩn danh",
-    ownerEmail: user.email || ""
+    ownerEmail: user.email || "",
+    foodSafetyCert: {
+      name: foodSafetyCert.name,
+      type: foodSafetyCert.type,
+      data: foodSafetyCertBase64
+    },
+    businessLicense: {
+      name: businessLicense.name,
+      type: businessLicense.type,
+      data: businessLicenseBase64
+    }
   };
 
   try {

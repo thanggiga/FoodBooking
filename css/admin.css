@@ -75,7 +75,7 @@
 html {
     font-family: nunito;
     font-size: 20px;
-    background-color: var(--background-color);
+    background-color: #e6e4e0;
 }
 
 .taskbar { 
@@ -188,14 +188,45 @@ html {
     border-radius: 8px;
     padding: 20px;
     box-shadow: var(--shadow);
+    width: 500px;
 }
 
 .product-card img {
     width: 100%;
-    height: 200px;
+    height: fit-content;
     object-fit: cover;
     border-radius: 4px;
     margin-bottom: 15px;
+}
+
+.certs-view {
+    margin: 10px 0 15px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.cert-block {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.cert-label {
+    font-weight: bold;
+    color: #444;
+    min-width: 180px;
+}
+.cert-img {
+    max-width: 180px;
+    max-height: 120px;
+    border: 1px solid #eee;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+}
+.cert-link {
+    color: #1976d2;
+    text-decoration: underline;
+    font-size: 1rem;
+    word-break: break-all;
 }
 
 .product-info h2 {
