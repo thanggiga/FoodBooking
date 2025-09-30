@@ -259,7 +259,7 @@ window.askPreferenceAdvice = async function () {
   }
 
   const selectedNames = selectedProducts.map(p => p.name).join(", ");
-  const prompt = `Tôi ${age} tuổi, mục tiêu: ${goal}. ${note ? "Ghi chú: " + note : ""} Tôi đã chọn các món: ${selectedNames}. Bạn nhận xét giúp tôi về lựa chọn này và tư vấn thêm nếu cần.`;
+  const prompt = `Tôi ${age} tuổi, mục tiêu: ${goal}. ${note} Tôi đã chọn các món: ${selectedNames}. Bạn nhận xét giúp tôi về lựa chọn này và tư vấn thêm nếu cần nhé, xưng hô bạn bè bình thường thôi.`;
 
   const apiKey = "AIzaSyAg5XdsCM_EkGpJETDggzs5DLRg5K4_1cQ";
   const model = "gemini-2.5-flash";
@@ -286,7 +286,6 @@ window.askPreferenceAdvice = async function () {
       return;
     }
 
-
     const data = await res.json();
     console.log("AI raw response:", data);
     const content = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
@@ -295,12 +294,70 @@ window.askPreferenceAdvice = async function () {
       loading.style.display = "none";
       return;
     }
+    // Tìm xem AI có trả về gợi ý món ăn dạng JSON không
+    let suggestions = null;
+    try {
+      // Tìm đoạn JSON trong content
+      const match = content.match(/\{[\s\S]+\}/);
+      if (match) {
+        const json = JSON.parse(match[0]);
+        if (Array.isArray(json.suggestions)) {
+          suggestions = json.suggestions;
+        }
+      }
+    } catch (e) {}
+
+    // Format AI content: remove Markdown headers, convert * to bullet points, bold/italic to HTML
     let formatted = content
-      .replace(/\*\*(.+?)\*\*/g, '<b>$1</b>') 
-      .replace(/\n{2,}/g, '</p><p>') 
-      .replace(/\n/g, '<br>'); 
-    result.innerHTML = `<div class="ai-advice-formatted"><b>FoodBooking AI tư vấn:</b> ${formatted}</div>
+      // Remove Markdown headers (###, ##, #)
+      .replace(/^#+\s*(.+)$/gm, '<h4>$1</h4>')
+      // Convert *text* at line start to bullet points
+      .replace(/(^|\n)\*\s?([^\n]+)/g, '$1<li>$2</li>')
+      // Convert _text_ or *text* to <i>
+      .replace(/\*([^*]+)\*/g, '<i>$1</i>')
+      .replace(/_([^_]+)_/g, '<i>$1</i>')
+      // Convert **text** to <b>
+      .replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>')
+      // Replace numbered list (1. text) with <ol><li>text</li></ol>
+      .replace(/(^|\n)(\d+)\.\s?([^\n]+)/g, '$1<ol><li>$3</li></ol>')
+      // Replace multiple newlines with paragraph
+      .replace(/\n{2,}/g, '</p><p>')
+      // Replace single newline with <br>
+      .replace(/\n/g, '<br>');
+    // Wrap <li> in <ul> if any
+    if (/<li>/.test(formatted)) {
+      formatted = formatted.replace(/(<li>.*?<\/li>)/gs, '<ul>$1</ul>');
+    }
+    // Remove any duplicate <ul><ul>...
+    formatted = formatted.replace(/(<ul>)+/g, '<ul>').replace(/(<\/ul>)+/g, '</ul>');
+    // Remove any duplicate <ol><ol>...
+    formatted = formatted.replace(/(<ol>)+/g, '<ol>').replace(/(<\/ol>)+/g, '</ol>');
+    // Remove stray <ul></ul> and <ol></ol>
+    formatted = formatted.replace(/<ul>\s*<\/ul>/g, '').replace(/<ol>\s*<\/ol>/g, '');
+    result.innerHTML = `<div class="ai-advice-formatted"><b>FoodBooking AI:</b><p>${formatted}</p></div>
       <button id="btnAddAllToCart" class="add-all-btn">Thêm tất cả món vào giỏ hàng</button>`;
+
+    // Nếu có suggestions, hiển thị ra dưới dạng box
+    if (suggestions && suggestions.length) {
+      // Tìm các sản phẩm trong allProducts trùng tên suggestions (nếu có)
+      const suggestedProducts = suggestions.map(s => {
+        if (typeof s === 'string') {
+          return allProducts.find(p => p.name.toLowerCase() === s.toLowerCase()) || { name: s };
+        }
+        return s;
+      });
+      // Nếu chưa có section, tạo mới
+      let suggestedSection = document.getElementById("suggestedSection");
+      if (!suggestedSection) {
+        suggestedSection = document.createElement("section");
+        suggestedSection.id = "suggestedSection";
+        result.parentNode.appendChild(suggestedSection);
+      }
+      suggestedSection.innerHTML = `<h3>Gợi ý thêm từ AI:</h3><div id="suggestedProducts"></div><button class="btn-main" onclick="addSuggestedToCart()">Thêm tất cả gợi ý vào danh sách chọn</button>`;
+      renderSuggestions(suggestedProducts);
+      suggestedSection.style.display = "block";
+    }
+
     const btnAddAll = document.getElementById("btnAddAllToCart");
     if (btnAddAll) {
       btnAddAll.onclick = async function() {

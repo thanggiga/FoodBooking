@@ -741,7 +741,7 @@ footer {
   position: absolute;
   right: 15px;
   top: 5px;
-  font-size: 20px;
+  font-size: 50px;
   cursor: pointer;
 }
 
@@ -786,6 +786,111 @@ footer {
   flex-direction: column;
   overflow: hidden;
   transition: all 0.3s ease;
+}
+
+/* Fullscreen mode for chatbot */
+
+#chatbot-container.fullscreen {
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+  right: auto !important;
+  bottom: auto !important;
+  transform: translate(-50%, -50%) !important;
+  width: 900px !important;
+  height: 80vh !important;
+  max-width: 98vw !important;
+  max-height: 95vh !important;
+  border-radius: 32px !important;
+  box-shadow: 0 8px 48px 0 rgba(0,0,0,0.35), 0 0 0 9999px rgba(0,0,0,0.25);
+  z-index: 20000 !important;
+  padding: 0 !important;
+  background: #fff !important;
+  display: flex;
+  flex-direction: column;
+}
+
+#chatbot-container.fullscreen .chatbot-header {
+  font-size: 2rem;
+  padding: 28px 36px 20px 36px;
+}
+#chatbot-container.fullscreen .chatbot-messages {
+  font-size: 1.2rem;
+  padding: 32px 40px;
+}
+#chatbot-container.fullscreen .chatbot-input {
+  padding: 24px 36px;
+}
+#chatbot-container.fullscreen #user-input {
+  font-size: 1.1rem;
+  padding: 14px 24px;
+}
+#chatbot-container.fullscreen .send-btn {
+  width: 52px;
+  height: 52px;
+  font-size: 1.5rem;
+}
+#chatbot-container.fullscreen .message-content {
+  font-size: 1.1rem;
+  padding: 16px 22px;
+}
+
+/* Maximize/minimize button: small in normal, big in popup, always next to close */
+.chatbot-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+.chatbot-header h3 {
+  flex: 1;
+}
+.chatbot-maximize-btn {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.1rem;
+  margin-left: 0.2rem;
+  margin-right: 0.2rem;
+  cursor: pointer;
+  transition: color 0.2s, font-size 0.2s;
+  outline: none;
+  vertical-align: middle;
+}
+#chatbot-container.fullscreen .chatbot-maximize-btn {
+  font-size: 1.7rem;
+  color: #333;
+}
+.chatbot-maximize-btn:hover {
+  color: #ffe082;
+}
+.close-btn {
+  font-size: 1.5rem;
+  margin-left: 0.2rem;
+  margin-right: 0.2rem;
+  background: none;
+  border: none;
+  color: #fff;
+  transition: color 0.2s, font-size 0.2s;
+}
+#chatbot-container.fullscreen .close-btn {
+  font-size: 2.5rem;
+  color: #d84315;
+}
+
+/* Maximize/minimize button */
+.chatbot-maximize-btn {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.7rem;
+  margin-left: 12px;
+  cursor: pointer;
+  transition: color 0.2s;
+  outline: none;
+}
+.chatbot-maximize-btn:hover {
+  color: #ffe082;
 }
 
 #user-input:hover {
